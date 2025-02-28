@@ -93,14 +93,24 @@ function startMatrixAnimation() {
     return setInterval(draw, 33);
 }
 
-function downloadResume() {
-    const resumePath = "/resumes/resume.pdf";
-    const a = document.createElement("a");
-    a.href = resumePath;
-    a.download = "Mein_Resume.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+async function downloadResume() {
+    try {
+        const response = await fetch('https://pillipalli.github.io/MeinPortfolio/resumes/resume.pdf', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Fehler beim Abrufen der Datei: ${response.status}`);
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Mein_Resume.pdf"; // Erzwingt den Download
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error("Resume-Download fehlgeschlagen:", error);
+    }
 }
 
 
