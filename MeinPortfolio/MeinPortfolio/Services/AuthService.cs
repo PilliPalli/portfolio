@@ -1,5 +1,3 @@
-using System.Text;
-using System.Text.Json;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Options;
 using MeinPortfolio.Models;
@@ -8,50 +6,40 @@ namespace MeinPortfolio.Services
 {
     public class AuthService
     {
-        private readonly HttpClient _httpClient;
-        private readonly IJSRuntime _jsRuntime;
-        private readonly PortfolioConfig _config;
-        private const string AUTH_STORAGE_KEY = "portfolio_auth";
+        private readonly IJSRuntime _js;
+        private readonly PortfolioConfig _cfg;
+        private const string AUTH_KEY = "portfolio_auth";
 
-        public bool IsAuthenticated { get; private set; } = false;
+        public bool IsAuthenticated { get; private set; }
 
-        public AuthService(HttpClient httpClient, IJSRuntime jsRuntime, IOptions<PortfolioConfig> config)
+        public AuthService(IJSRuntime js, IOptions<PortfolioConfig> cfg)
         {
-            _httpClient = httpClient;
-            _jsRuntime = jsRuntime;
-            _config = config.Value;
+            _js  = js;
+            _cfg = cfg.Value;
         }
 
         public async Task InitializeAsync()
         {
-            try
-            {
-                var storedAuth = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", AUTH_STORAGE_KEY);
-                IsAuthenticated = !string.IsNullOrEmpty(storedAuth) && storedAuth == "authenticated";
-            }
-            catch
-            {
-                IsAuthenticated = false;
-            }
+            var stored = await _js.InvokeAsync<string>("localStorage.getItem", AUTH_KEY);
+            IsAuthenticated = stored == "authenticated";
         }
 
         public async Task<bool> LoginAsync(string password)
         {
-            if (password == _config.Password)
-            {
-                IsAuthenticated = true;
-                await _jsRuntime.InvokeVoidAsync("localStorage.setItem", AUTH_STORAGE_KEY, "authenticated");
-                return true;
-            }
+            if (password != _cfg.Password) return false;
 
-            return false;
+            IsAuthenticated = true;
+            await _js.InvokeVoidAsync("localStorage.setItem", AUTH_KEY, "authenticated");
+
+
+            
+            return true;
         }
 
         public async Task LogoutAsync()
         {
             IsAuthenticated = false;
-            await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", AUTH_STORAGE_KEY);
+            await _js.InvokeVoidAsync("localStorage.removeItem", AUTH_KEY);
         }
-
     }
 }
