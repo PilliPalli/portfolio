@@ -30,21 +30,21 @@ namespace MeinPortfolio.Models.Commands
                 case "about":
                 case "about_me":
                     _navigationService.NavigateTo(NavigationSection.About);
-                    return Task.FromResult($"Navigated to About Me section.");
+                    return Task.FromResult($"Navigated to about_me section.");
                 
                 case "projects":
                     _navigationService.NavigateTo(NavigationSection.Projects);
-                    return Task.FromResult($"Navigated to Projects section.");
+                    return Task.FromResult($"Navigated to projects section.");
                 
                 case "contact":
                 case "contact_me":
                     _navigationService.NavigateTo(NavigationSection.Contact);
-                    return Task.FromResult($"Navigated to Contact section.");
+                    return Task.FromResult($"Navigated to contact_me section.");
                 
                 case "~":
                 case "home":
                     _navigationService.GoHome();
-                    return Task.FromResult($"Navigated to Home section.");
+                    return Task.FromResult($"Navigated to home section.");
                 
                 case "..":
                     if (_navigationService.CanGoBack)
@@ -102,36 +102,9 @@ namespace MeinPortfolio.Models.Commands
             return section switch
             {
                 NavigationSection.Home => Task.FromResult("about_me   projects   contact_me"),
-
-                NavigationSection.About => Task.FromResult(
-                    "Name: Moritz Nicola Kreis\n" +
-                    "Alter: 22 Jahre alt\n" +
-                    "Abschluss: Staatlich geprüfter Wirtschaftsinformatiker\n" +
-                    "Erfahrung: Berufseinsteiger\n" +
-                    "Kenntnisse: C#, Blazor, Git, SQL\n" +
-                    "Hobbys: Fitnessstudio, Freunde treffen"),
-                
-                NavigationSection.Projects => Task.FromResult(@"Meine Projekte:
-
-                    - Portfolio
-                      Beschreibung: Interaktive Portfolio-Website im Terminal-Stil mit Informationen über mich
-                      Technologie: C#, Blazor WebAssembly
-
-                    - Schwimmbad-Verwaltung
-                      Beschreibung: Anwendung zur Mitgliederverwaltung eines fiktiven Schwimmbads mit MSSQL-Anbindung
-                      Technologie: C#, WPF
-
-                    - Garbage Collection Tool
-                      Beschreibung: Tool zur automatischen Löschung temporärer Dateien mit Scheduler, Login-System und DB-Anbindung
-                      Technologie: C#, WPF
-
-                    - Code-Kommentierungstool
-                      Beschreibung: Tool zur automatischen Kommentierung von Code mittels ChatGPT-API, einstellbar nach Detailgrad
-                      Technologie: C#, WPF
-                    "),
-
-                NavigationSection.Contact => Task.FromResult("Email: moritz.nicola.kreis@gmail.com"),
-
+                NavigationSection.About => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
+                NavigationSection.Projects => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
+                NavigationSection.Contact => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 _ => Task.FromResult("Unknown section")
             };
 
@@ -182,6 +155,44 @@ namespace MeinPortfolio.Models.Commands
         {
             _navigationService.GoHome();
             return Task.FromResult("Navigated to Home section.");
+        }
+    }
+
+    public class CatCommand : BaseCommand
+    {
+        private readonly NavigationService _navigationService;
+
+        public override string Name => "cat";
+        public override string Description => "Display file contents";
+        public override string Usage => "cat <filename>";
+
+        public CatCommand(NavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
+        public override Task<string> ExecuteAsync(string[] args)
+        {
+            if (args.Length == 0)
+            {
+                return Task.FromResult("Usage: cat <filename>");
+            }
+
+            var filename = args[0];
+            var section = _navigationService.CurrentSection;
+
+            if (section == NavigationSection.Home)
+            {
+                return Task.FromResult("cat: cannot display directory contents. Use 'cd <section>' to navigate to a section first.");
+            }
+
+            var content = VirtualFileSystem.GetFileContent(section, filename);
+            if (content == null)
+            {
+                return Task.FromResult($"cat: {filename}: No such file or directory");
+            }
+
+            return Task.FromResult(content);
         }
     }
 }

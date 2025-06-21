@@ -57,6 +57,7 @@ namespace MeinPortfolio.Pages
             CommandService.RegisterCommand(new CdCommand(NavigationService));
             CommandService.RegisterCommand(new PwdCommand(NavigationService));
             CommandService.RegisterCommand(new LsCommand(NavigationService));
+            CommandService.RegisterCommand(new CatCommand(NavigationService));
             CommandService.RegisterCommand(new BackCommand(NavigationService));
             CommandService.RegisterCommand(new HomeCommand(NavigationService));
 
@@ -97,6 +98,7 @@ namespace MeinPortfolio.Pages
         {
             "help",
             "ls",
+            "cat",
             "home",
             "clear",
             "whoami",
