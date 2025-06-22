@@ -87,7 +87,7 @@ namespace MeinPortfolio.Models.Commands
         private readonly NavigationService _navigationService;
 
         public override string Name => "ls";
-        public override string Description => "List sections in home or show content of the current section";
+        public override string Description => "List sections";
         public override string Usage => "ls";
 
         public LsCommand(NavigationService navigationService)
