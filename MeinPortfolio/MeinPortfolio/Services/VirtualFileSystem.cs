@@ -31,7 +31,12 @@ namespace MeinPortfolio.Services
                 ["code-commenter-tool.txt"] = 
                     "Projekt: Code-Kommentierungstool\n" +
                     "Beschreibung: Anwendung zur automatischen Kommentierung von Quellcode über die ChatGPT-API, konfigurierbar nach Detailtiefe\n" +
-                    "Technologien: C#, WPF"
+                    "Technologien: C#, WPF",
+                        
+                ["pdf-report-generator.txt"] = 
+                    "Projekt: PDF-Generator für eine Suchstaffel\n" +
+                    "Beschreibung: Webanwendung zur automatischen Erstellung von PDF-Berichten für Einsätze einer Suchhundestaffel. Nutzer erfassen Einsatzdaten über ein Formular, die in einer PostgreSQL-Datenbank gespeichert und anschließend als strukturierte PDF-Berichte generiert werden. Das Tool unterstützt aktiv die Bekämpfung der Afrikanischen Schweinepest in Hessen und Rheinland-Pfalz und wird bereits von mehreren Personen im Einsatz genutzt.\n" +
+                    "Technologien: C#, Blazor Server, PostgreSQL"
             },
             [NavigationSection.Contact] = new Dictionary<string, string>
             {
