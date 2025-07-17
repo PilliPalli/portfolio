@@ -70,6 +70,8 @@ namespace MeinPortfolio.Pages
 
             CommandService.RegisterCommand(new ThemeCommand(ThemeService));
             CommandService.RegisterCommand(new CvCommand(JSRuntime));
+            
+            CommandService.RegisterCommand(new FunFactCommand());
         }
 
         private async Task HandleKeyPress(KeyboardEventArgs e)
@@ -110,7 +112,8 @@ namespace MeinPortfolio.Pages
             "echo",
             "pwd",
             "back",
-            "logout"
+            "logout",
+            "funfact"
         };
 
         private string GetAutoCompleteSuggestion(string currentInput)
