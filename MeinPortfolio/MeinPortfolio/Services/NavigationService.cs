@@ -30,16 +30,7 @@ namespace MeinPortfolio.Services
             }
         }
 
-        public bool CanGoBack => _navigationHistory.Count > 0;
-
-        public void GoBack()
-        {
-            if (CanGoBack)
-            {
-                _currentSection = _navigationHistory.Pop();
-                OnNavigate?.Invoke(_currentSection);
-            }
-        }
+      
 
         public void GoHome()
         {

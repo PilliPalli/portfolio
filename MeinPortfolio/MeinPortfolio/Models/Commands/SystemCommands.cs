@@ -41,22 +41,7 @@ namespace MeinPortfolio.Models.Commands
 
 
 
-    public class EchoCommand : BaseCommand
-    {
-        public override string Name => "echo";
-        public override string Description => "Display a line of text";
-        public override string Usage => "echo [text]";
-
-        public override Task<string> ExecuteAsync(string[] args)
-        {
-            if (args.Length == 0)
-            {
-                return Task.FromResult(string.Empty);
-            }
-
-            return Task.FromResult(string.Join(" ", args));
-        }
-    }
+   
 
     public class DateCommand : BaseCommand
     {

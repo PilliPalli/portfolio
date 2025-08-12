@@ -58,11 +58,9 @@ namespace MeinPortfolio.Pages
             CommandService.RegisterCommand(new PwdCommand(NavigationService));
             CommandService.RegisterCommand(new LsCommand(NavigationService));
             CommandService.RegisterCommand(new CatCommand(NavigationService));
-            CommandService.RegisterCommand(new BackCommand(NavigationService));
             CommandService.RegisterCommand(new HomeCommand(NavigationService));
 
             CommandService.RegisterCommand(new ClearCommand());
-            CommandService.RegisterCommand(new EchoCommand());
             CommandService.RegisterCommand(new DateCommand());
             CommandService.RegisterCommand(new WhoamiCommand());
             CommandService.RegisterCommand(new LogoutCommand(AuthService.LogoutAsync, NavigationManager));
@@ -109,9 +107,7 @@ namespace MeinPortfolio.Pages
             "cv",
             "theme",
             "date",
-            "echo",
             "pwd",
-            "back",
             "logout",
             "funfact"
         };

@@ -46,17 +46,6 @@ namespace MeinPortfolio.Models.Commands
                     _navigationService.GoHome();
                     return Task.FromResult($"Navigated to home section.");
                 
-                case "..":
-                    if (_navigationService.CanGoBack)
-                    {
-                        _navigationService.GoBack();
-                        return Task.FromResult($"Navigated back to {_navigationService.GetSectionPath()}");
-                    }
-                    else
-                    {
-                        return Task.FromResult("Already at the top level.");
-                    }
-                
                 default:
                     return Task.FromResult($"Section '{section}' not found. Available sections: about, projects, contact, home");
             }
@@ -108,33 +97,6 @@ namespace MeinPortfolio.Models.Commands
                 _ => Task.FromResult("Unknown section")
             };
 
-        }
-    }
-
-    public class BackCommand : BaseCommand
-    {
-        private readonly NavigationService _navigationService;
-
-        public override string Name => "back";
-        public override string Description => "Navigate back to the previous section";
-        public override string Usage => "back";
-
-        public BackCommand(NavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
-
-        public override Task<string> ExecuteAsync(string[] args)
-        {
-            if (_navigationService.CanGoBack)
-            {
-                _navigationService.GoBack();
-                return Task.FromResult($"Navigated back to {_navigationService.GetSectionPath()}");
-            }
-            else
-            {
-                return Task.FromResult("No previous section to navigate back to.");
-            }
         }
     }
 
