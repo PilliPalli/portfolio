@@ -21,6 +21,12 @@
     </div>
     <div class="terminal-input">
         <span>$ </span>
-        <input @bind="input" @bind:event="oninput" @onkeydown="HandleKeyPress" @ref="inputElement" autofocus />
+        <input
+            @bind="input"
+            @bind:event="oninput"
+            @onkeydown="HandleKeyPress"
+            @onkeydown:stopPropagation
+            @ref="inputElement"
+            autofocus />
     </div>
 </div>

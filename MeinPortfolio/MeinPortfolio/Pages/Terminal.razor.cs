@@ -21,6 +21,15 @@ namespace MeinPortfolio.Pages
         private ElementReference inputElement;
         private bool showContactForm = false;
 
+        private List<string> _cycleCandidates = new();
+        private int _cycleIndex = -1;
+        private string _cycleFixedPrefix = "";
+        private string _inputBeforeCycle = "";    
+
+        private static readonly List<string> _sections = new()
+        {
+            "about", "about_me", "projects", "contact", "contact_me", "home", "~"
+        };
         protected override async Task OnInitializedAsync()
         {
             await AuthService.InitializeAsync();
@@ -77,22 +86,154 @@ namespace MeinPortfolio.Pages
             switch (e.Key)
             {
                 case "Enter":
+                    ResetCycle();
                     await ExecuteCommandAsync();
                     break;
+
                 case "ArrowUp":
+                    ResetCycle();
                     input = CommandService.GetPreviousCommand();
                     StateHasChanged();
                     break;
+
                 case "ArrowDown":
+                    ResetCycle();
                     input = CommandService.GetNextCommand();
                     StateHasChanged();
                     break;
+
                 case "Tab":
-                    input = GetAutoCompleteSuggestion(input);
+                    input = GetAutoCompleteSuggestion(input); 
                     StateHasChanged();
+                    await FocusInputAsync();
+                    break;
+
+
+                default:
+                    ResetCycle();
                     break;
             }
         }
+        
+        private void ResetCycle()
+        {
+            _cycleCandidates.Clear();
+            _cycleIndex = -1;
+            _cycleFixedPrefix = "";
+            _inputBeforeCycle = "";
+        }
+
+        private (string fixedPrefix, string token) SplitAtLastToken(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return ("", "");
+
+            int lastSpace = text.LastIndexOf(' ');
+            if (lastSpace < 0)
+                return ("", text); 
+
+            var fixedPrefix = text.Substring(0, lastSpace + 1); 
+            var token = text.Substring(lastSpace + 1);
+            return (fixedPrefix, token);
+        }
+
+        private string CommonPrefix(IEnumerable<string> items)
+        {
+            var list = items.ToList();
+            if (!list.Any()) return "";
+
+            string prefix = list[0];
+            foreach (var s in list.Skip(1))
+            {
+                int i = 0;
+                int max = Math.Min(prefix.Length, s.Length);
+                while (i < max && prefix[i] == s[i]) i++;
+                prefix = prefix.Substring(0, i);
+                if (prefix.Length == 0) break;
+            }
+            return prefix;
+        }
+        
+        private IEnumerable<string> GetCandidates(string fullInput, string token)
+        {
+            if (!fullInput.Contains(' '))
+            {
+                return commandList.Where(c => c.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(x => x);
+            }
+
+            var firstSpace = fullInput.IndexOf(' ');
+            var cmd = fullInput.Substring(0, firstSpace).Trim().ToLower();
+
+            switch (cmd)
+            {
+                case "cd":
+                    return _sections.Where(s => s.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(x => x);
+
+                case "cat":
+                    var files = VirtualFileSystem.GetFiles(NavigationService.CurrentSection).Keys;
+                    return files.Where(f => f.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(x => x);
+
+               
+                default:
+                    return Enumerable.Empty<string>();
+            }
+        }
+        
+        private string GetAutoCompleteSuggestion(string currentInput)
+        {
+            if (string.IsNullOrWhiteSpace(currentInput))
+                return currentInput;
+
+            // Bereits im Cycle? → nur vorwärts (+1)
+            if (_cycleCandidates.Count > 0 && currentInput == BuildCurrentCycleInput())
+            {
+                if (_cycleCandidates.Count == 1)
+                    return currentInput;
+
+                _cycleIndex = (_cycleIndex + 1) % _cycleCandidates.Count;
+                return _cycleFixedPrefix + _cycleCandidates[_cycleIndex];
+            }
+
+            var (fixedPrefix, token) = SplitAtLastToken(currentInput);
+            var candidates = GetCandidates(currentInput, token).ToList();
+            if (candidates.Count == 0)
+            {
+                ResetCycle();
+                return currentInput;
+            }
+
+            // gemeinsamer Präfix → erstmal bis dahin erweitern
+            var common = CommonPrefix(candidates);
+            if (!string.IsNullOrEmpty(common) && common.Length > token.Length)
+            {
+                ResetCycle();
+                var completed = fixedPrefix + common;
+
+                // Auto-Space bei vollständigem Befehl
+                if (!currentInput.Contains(' ') && commandList.Contains(common))
+                    completed += " ";
+
+                return completed;
+            }
+
+            _cycleCandidates = candidates;
+            _cycleIndex = 0;                 
+            _cycleFixedPrefix = fixedPrefix;
+            _inputBeforeCycle = currentInput;
+
+            return _cycleFixedPrefix + _cycleCandidates[_cycleIndex];
+        }
+
+
+        private string BuildCurrentCycleInput()
+        {
+            if (_cycleCandidates.Count == 0 || _cycleIndex < 0) return _inputBeforeCycle;
+            return _cycleFixedPrefix + _cycleCandidates[_cycleIndex];
+        }
+
 
         private List<string> commandList = new List<string>
         {
@@ -111,17 +252,7 @@ namespace MeinPortfolio.Pages
             "logout",
             "funfact"
         };
-
-        private string GetAutoCompleteSuggestion(string currentInput)
-        {
-            if (string.IsNullOrWhiteSpace(currentInput))
-                return currentInput;
-
-            var suggestion = commandList.FirstOrDefault(cmd => cmd.StartsWith(currentInput, StringComparison.OrdinalIgnoreCase));
-
-            return suggestion ?? currentInput;
-        }
-
+        
         private async Task ExecuteCommandAsync()
         {
             if (string.IsNullOrWhiteSpace(input)) return;
@@ -182,7 +313,6 @@ namespace MeinPortfolio.Pages
         {
             StateHasChanged();
         }
-        
         
         public void Dispose()
         {

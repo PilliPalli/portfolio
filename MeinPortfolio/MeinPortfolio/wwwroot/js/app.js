@@ -36,8 +36,25 @@ async function downloadCv() {
 // Initialize
 window.initTerminal = function () {
     window.terminalReady = true;
+
+    const input = document.querySelector('.terminal-input input');
+    if (input) {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+            }
+        });
+
+        input.addEventListener('keyup', (e) => {
+            if (e.key === 'Tab') {
+                setTimeout(() => input.focus(), 0);
+            }
+        });
+    }
+
     console.log('Terminal initialized');
 };
+
 
 
 // Text animation
@@ -69,4 +86,3 @@ window.scrollTerminalToBottom = function () {
         el.scrollTop = el.scrollHeight;
     }
 };
-
