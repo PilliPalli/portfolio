@@ -1,0 +1,45 @@
+@using MeinPortfolio.Services
+@inject LanguageService LanguageService
+@implements IDisposable
+
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand"><span class="nav-logo">MK</span></div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">@LanguageService.GetText("Home", "Home")</a>
+                <a href="#about" class="nav-link">@LanguageService.GetText("Über mich", "About")</a>
+                <a href="#projects" class="nav-link">@LanguageService.GetText("Projekte", "Projects")</a>
+                <a href="#contact" class="nav-link">@LanguageService.GetText("Kontakt", "Contact")</a>
+                <a href="/cv/cv.pdf" class="nav-link nav-cv" target="_blank">CV</a>
+                <button class="nav-language-btn" @onclick="ToggleLanguage">
+                    @(LanguageService.CurrentLanguage == LanguageType.German ? "EN" : "DE")
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await LanguageService.InitializeAsync();
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+        
+    }
+
+    private void HandleAuthChanged() => InvokeAsync(StateHasChanged);
+
+    protected async Task ToggleLanguage()
+        => await LanguageService.SetLanguageAsync(
+            LanguageService.CurrentLanguage == LanguageType.German
+                ? LanguageType.English
+                : LanguageType.German);
+
+    private void OnLanguageChanged(LanguageType _) => StateHasChanged();
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

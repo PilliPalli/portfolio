@@ -5,15 +5,13 @@ using MeinPortfolio.Models;
 using MeinPortfolio.Models.Commands;
 using MeinPortfolio.Services;
 
-namespace MeinPortfolio.Pages
+namespace MeinPortfolio.Components
 {
     public partial class Terminal : IDisposable
     {
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private CommandService CommandService { get; set; }
         [Inject] private NavigationService NavigationService { get; set; }
-        [Inject] private ThemeService ThemeService { get; set; }
-        [Inject] private AuthService AuthService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
         private List<OutputLine> output = new();
@@ -28,23 +26,12 @@ namespace MeinPortfolio.Pages
 
         private static readonly List<string> _sections = new()
         {
-            "about", "about_me", "projects", "contact", "contact_me", "home", "~"
+            "about", "projects", "contact", "home", "~"
         };
         protected override async Task OnInitializedAsync()
         {
-            await AuthService.InitializeAsync();
-            
-            if (!AuthService.IsAuthenticated)
-            {
-                NavigationManager.NavigateTo("/");
-                return;
-            }
-
             RegisterCommands();
-
-            await ThemeService.InitializeAsync();
-            ThemeService.OnThemeChanged += HandleThemeChanged;
-
+            
             NavigationService.OnNavigate += HandleNavigate;
 
             output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
@@ -72,10 +59,8 @@ namespace MeinPortfolio.Pages
             CommandService.RegisterCommand(new ClearCommand());
             CommandService.RegisterCommand(new DateCommand());
             CommandService.RegisterCommand(new WhoamiCommand());
-            CommandService.RegisterCommand(new LogoutCommand(AuthService.LogoutAsync, NavigationManager));
 
 
-            CommandService.RegisterCommand(new ThemeCommand(ThemeService));
             CommandService.RegisterCommand(new CvCommand(JSRuntime));
             
             CommandService.RegisterCommand(new FunFactCommand());
@@ -244,12 +229,10 @@ namespace MeinPortfolio.Pages
             "clear",
             "whoami",
             "cd",
-            "about_me",
             "cv",
             "theme",
             "date",
             "pwd",
-            "logout",
             "funfact"
         };
         
@@ -304,10 +287,7 @@ namespace MeinPortfolio.Pages
             await JSRuntime.InvokeVoidAsync("eval", "document.querySelector('.terminal-input input').focus()");
         }
 
-        private void HandleThemeChanged(ThemeType theme)
-        {
-            StateHasChanged();
-        }
+       
 
         private void HandleNavigate(NavigationSection section)
         {
@@ -316,7 +296,6 @@ namespace MeinPortfolio.Pages
         
         public void Dispose()
         {
-            ThemeService.OnThemeChanged -= HandleThemeChanged;
             NavigationService.OnNavigate -= HandleNavigate;
         }
     }

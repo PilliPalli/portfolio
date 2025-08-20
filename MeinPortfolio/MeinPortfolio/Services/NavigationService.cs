@@ -47,9 +47,9 @@ namespace MeinPortfolio.Services
             return _currentSection switch
             {
                 NavigationSection.Home => "~",
-                NavigationSection.About => "~/about_me",
+                NavigationSection.About => "~/about",
                 NavigationSection.Projects => "~/projects",
-                NavigationSection.Contact => "~/contact_me",
+                NavigationSection.Contact => "~/contact",
                 _ => "~"
             };
         }

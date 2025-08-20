@@ -19,9 +19,8 @@ public class Program
         builder.Services.AddHttpClient();
         
         builder.Services.AddSingleton<CommandService>();
+        builder.Services.AddScoped<LanguageService>();
         builder.Services.AddSingleton<NavigationService>();
-        builder.Services.AddScoped<ThemeService>();
-        builder.Services.AddScoped<AuthService>();
         builder.Services.Configure<PortfolioConfig>(
             builder.Configuration.GetSection("Portfolio"));
 

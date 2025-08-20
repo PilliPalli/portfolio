@@ -1,0 +1,50 @@
+
+
+<section id="home" class="intro-section">
+    <div class="intro-container">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h1 class="intro-title">Moritz Kreis</h1>
+                <h2 class="intro-subtitle">C#/.NET Developer</h2>
+                <p class="intro-description">
+                    Staatlich geprüfter Wirtschaftsinformatiker mit Fokus auf moderne Webtechnologien.
+                    Entdecke mein interaktives Terminal-Portfolio oder scrolle für eine klassische Übersicht.
+                </p>
+                <div class="intro-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="/cv/cv.pdf" class="btn btn-outline" target="_blank">Download CV</a>
+                </div>
+            </div>
+            <div class="intro-terminal">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div>Terminal Portfolio - @NavigationService.GetSectionPath()</div>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        @foreach (var line in output)
+                        {
+                            if (line.IsHtml)
+                            {
+                                <div>@((MarkupString)line.Content)</div>
+                            }
+                            else
+                            {
+                                <div>@line.Content</div>
+                            }
+                        }
+                    </div>
+                    <div class="terminal-input">
+                        <span>$ </span>
+                        <input
+                            @bind="input"
+                            @bind:event="oninput"
+                            @onkeydown="HandleKeyPress"
+                            @onkeydown:stopPropagation
+                            @ref="inputElement"
+                            autofocus />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

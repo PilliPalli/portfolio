@@ -28,18 +28,16 @@ namespace MeinPortfolio.Models.Commands
             switch (section)
             {
                 case "about":
-                case "about_me":
                     _navigationService.NavigateTo(NavigationSection.About);
-                    return Task.FromResult($"Navigated to about_me section.");
+                    return Task.FromResult($"Navigated to about section.");
                 
                 case "projects":
                     _navigationService.NavigateTo(NavigationSection.Projects);
                     return Task.FromResult($"Navigated to projects section.");
                 
                 case "contact":
-                case "contact_me":
                     _navigationService.NavigateTo(NavigationSection.Contact);
-                    return Task.FromResult($"Navigated to contact_me section.");
+                    return Task.FromResult($"Navigated to contact section.");
                 
                 case "~":
                 case "home":
@@ -90,7 +88,7 @@ namespace MeinPortfolio.Models.Commands
             
             return section switch
             {
-                NavigationSection.Home => Task.FromResult("about_me   projects   contact_me"),
+                NavigationSection.Home => Task.FromResult("about   projects   contact"),
                 NavigationSection.About => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 NavigationSection.Projects => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 NavigationSection.Contact => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
