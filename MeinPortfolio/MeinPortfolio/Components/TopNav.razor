@@ -3,24 +3,41 @@
 @implements IDisposable
 
 
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="nav-brand"><span class="nav-logo">MK</span></div>
-            <div class="nav-links">
-                <a href="#home" class="nav-link">@LanguageService.GetText("Home", "Home")</a>
-                <a href="#about" class="nav-link">@LanguageService.GetText("Über mich", "About")</a>
-                <a href="#projects" class="nav-link">@LanguageService.GetText("Projekte", "Projects")</a>
-                <a href="#contact" class="nav-link">@LanguageService.GetText("Kontakt", "Contact")</a>
-                <a href="@CvPath" class="nav-link nav-cv" target="_blank">CV</a>
-                <button class="nav-language-btn" @onclick="ToggleLanguage">
-                    @(LanguageService.CurrentLanguage == LanguageType.German ? "EN" : "DE")
-                </button>
-            </div>
+<nav class="top-nav">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <span class="nav-logo">MK</span>
         </div>
-    </nav>
+
+        <!-- Hamburger nur auf Mobile sichtbar (per CSS) -->
+        <button class="nav-toggle"
+                @onclick="ToggleMenu"
+                aria-expanded="@isMenuOpen"
+                aria-controls="primary-nav"
+                aria-label="Menü öffnen/schließen">
+            ☰
+        </button>
+
+        <div id="primary-nav" class="nav-links @(isMenuOpen ? "open" : null)">
+            <a href="#home" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Home", "Home")</a>
+            <a href="#about" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Über mich", "About")</a>
+            <a href="#projects" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Projekte", "Projects")</a>
+            <a href="#contact" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Kontakt", "Contact")</a>
+            <a href="@CvPath" class="nav-link nav-cv" target="_blank" @onclick="CloseMenu">CV</a>
+            <button class="nav-language-btn" @onclick="ToggleLanguage">
+                @(LanguageService.CurrentLanguage == LanguageType.German ? "EN" : "DE")
+            </button>
+        </div>
+    </div>
+</nav>
 
 
 @code {
+
+    private bool isMenuOpen;
+
+    private void ToggleMenu() => isMenuOpen = !isMenuOpen;
+    private void CloseMenu() => isMenuOpen = false;
 
     private string CvPath
     {

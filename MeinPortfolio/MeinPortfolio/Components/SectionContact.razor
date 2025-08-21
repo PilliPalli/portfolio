@@ -21,7 +21,7 @@
                     </span>
                     <span>E-Mail</span>
                 </a>
-                <a href="https://linkedin.com/in/moritz-kreis" class="contact-btn" target="_blank">
+                <a href="https://www.linkedin.com/in/moritz-nicola-kreis" class="contact-btn" target="_blank">
                     <span class="contact-icon">
                         <img src="images/linkedin.png" alt="LinkedInIcon"/>
                     </span>
@@ -60,7 +60,18 @@
         LanguageService.OnLanguageChanged -= OnLanguageChanged;
     }
     
-    private string CvPath => LanguageService.CurrentLanguage == LanguageType.German 
-        ? "cv/CV_DE.pdf" 
-        : "cv/CV_EN.pdf";
+    private string CvPath
+    {
+        get
+        {
+            if (LanguageService.CurrentLanguage == LanguageType.German)
+            {
+                return "cv/CV_DE.pdf";
+            }
+            else
+            {
+                return "cv/CV_EN.pdf";
+            }
+        }
+    }
 }

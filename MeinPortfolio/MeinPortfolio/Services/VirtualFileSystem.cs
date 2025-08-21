@@ -9,8 +9,8 @@ namespace MeinPortfolio.Services
             [NavigationSection.About] = new Dictionary<string, LocalizedFile>
             {
                 ["bio.txt"] = new LocalizedFile(
-                    "Name: Moritz Nicola Kreis\nAlter: 22 Jahre alt\nAbschluss: Staatlich geprüfter Wirtschaftsinformatiker\nErfahrung: Berufseinsteiger\nKenntnisse: C#, Blazor, Git, SQL\nHobbys: Fitness, Freunde treffen",
-                    "Name: Moritz Nicola Kreis\nAge: 22 years old\nDegree: State-certified Business Informatics Specialist\nExperience: Entry level\nSkills: C#, Blazor, Git, SQL\nHobbies: Fitness, meeting friends"
+                    "Name: Moritz Nicola Kreis\nAlter: 22 Jahre alt\nAbschluss: Staatlich geprüfter Wirtschaftsinformatiker\nErfahrung: Berufseinsteiger\nKenntnisse: C#, Blazor, Git, SQL\nInteressen: Norwegisch lernen & skandinavische Kultur, Freunde treffen",
+                    "Name: Moritz Nicola Kreis\nAge: 22 years old\nDegree: State-certified Business Informatics Specialist\nExperience: Entry level\nSkills: C#, Blazor, Git, SQL\nInterests: learning norwegian & scandinavian culture, meeting friends"
                 )
             },
 
@@ -45,21 +45,18 @@ namespace MeinPortfolio.Services
             [NavigationSection.Contact] = new Dictionary<string, LocalizedFile>
             {
                 ["email.txt"] = new LocalizedFile(
-                    "E-Mail: moritz.nicola.kreis@gmail.com",
-                    "Email: moritz.nicola.kreis@gmail.com"
+                    "E-Mail: bewerbung@moritz-kreis.de",
+                    "Email: bewerbung@moritz-kreis.de"
                 )
             }
         };
-
-        // Bewahrt die alte „Liste der Dateinamen“-Nutzung:
+        
         public static IEnumerable<string> GetFileNames(NavigationSection section)
             => _fileSystem.TryGetValue(section, out var files) ? files.Keys : [];
-
-        // Falls du die komplette Struktur brauchst:
+        
         public static IReadOnlyDictionary<string, LocalizedFile> GetFiles(NavigationSection section)
             => _fileSystem.TryGetValue(section, out var files) ? files : new Dictionary<string, LocalizedFile>();
-
-        // Liefert sprachabhängigen Inhalt:
+        
         public static string? GetFileContent(NavigationSection section, string filename, LanguageService languageService)
         {
             var files = GetFiles(section);

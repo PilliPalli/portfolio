@@ -53,8 +53,19 @@
 </section>
 
 @code {
-    private string CvPath => LanguageService.CurrentLanguage == LanguageType.German 
-        ? "cv/CV_DE.pdf" 
-        : "cv/CV_EN.pdf";
+    private string CvPath
+    {
+        get
+        {
+            if (LanguageService.CurrentLanguage == LanguageType.German)
+            {
+                return "cv/CV_DE.pdf";
+            }
+            else
+            {
+                return "cv/CV_EN.pdf";
+            }
+        }
+    }
 }
 
