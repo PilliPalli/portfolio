@@ -33,7 +33,7 @@
                     </span>
                     <span>GitHub</span>
                 </a>
-                <a href="/cv/cv.pdf" class="contact-btn" target="_blank">
+                <a href="@CvPath" class="contact-btn" target="_blank">
                     <span class="contact-icon">
                         <img src="images/pdf.png" alt="CVIcon"/>
                     </span>
@@ -59,4 +59,8 @@
     {
         LanguageService.OnLanguageChanged -= OnLanguageChanged;
     }
+    
+    private string CvPath => LanguageService.CurrentLanguage == LanguageType.German 
+        ? "cv/CV_DE.pdf" 
+        : "cv/CV_EN.pdf";
 }

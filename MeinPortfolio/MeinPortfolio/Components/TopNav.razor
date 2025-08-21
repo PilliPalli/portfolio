@@ -11,7 +11,7 @@
                 <a href="#about" class="nav-link">@LanguageService.GetText("Über mich", "About")</a>
                 <a href="#projects" class="nav-link">@LanguageService.GetText("Projekte", "Projects")</a>
                 <a href="#contact" class="nav-link">@LanguageService.GetText("Kontakt", "Contact")</a>
-                <a href="/cv/cv.pdf" class="nav-link nav-cv" target="_blank">CV</a>
+                <a href="@CvPath" class="nav-link nav-cv" target="_blank">CV</a>
                 <button class="nav-language-btn" @onclick="ToggleLanguage">
                     @(LanguageService.CurrentLanguage == LanguageType.German ? "EN" : "DE")
                 </button>
@@ -21,6 +21,21 @@
 
 
 @code {
+
+    private string CvPath
+    {
+        get
+        {
+            if (LanguageService.CurrentLanguage == LanguageType.German)
+            {
+                return "cv/CV_DE.pdf";
+            }
+            else
+            {
+                return "cv/CV_EN.pdf";
+            }
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
         await LanguageService.InitializeAsync();

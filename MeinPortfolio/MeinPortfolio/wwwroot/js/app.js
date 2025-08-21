@@ -1,22 +1,29 @@
-async function downloadCv() {
+
+    async function downloadCv(url, fileName) {
     try {
-        const response = await fetch('cv/cv.pdf', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`Fehler beim Abrufen der Datei: ${response.status}`);
+    const resolvedUrl = new URL(url, document.baseURI).href;
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
+    const response = await fetch(resolvedUrl, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Fehler beim Abrufen der Datei: ${response.status}`);
 
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "My_CV.pdf"; 
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-    } catch (error) {
-        console.error("CV-Download fehlgeschlagen:", error);
-    }
+    const blob = await response.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = fileName || "CV.pdf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(objectUrl);
+} catch (error) {
+    console.error("CV-Download fehlgeschlagen:", error);
+    // Fallback: im Tab öffnen (z. B. für iOS Safari)
+    try { window.open(url, "_blank"); } catch {}
 }
+}
+    window.downloadCv = downloadCv;
+
 
 // Initialize
 window.initTerminal = function () {

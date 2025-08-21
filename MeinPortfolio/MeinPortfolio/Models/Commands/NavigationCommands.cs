@@ -117,18 +117,21 @@ namespace MeinPortfolio.Models.Commands
             return Task.FromResult("Navigated to Home section.");
         }
     }
+    
 
     public class CatCommand : BaseCommand
     {
         private readonly NavigationService _navigationService;
+        private readonly LanguageService _languageService;
 
         public override string Name => "cat";
         public override string Description => "Display file contents";
         public override string Usage => "cat <filename>";
 
-        public CatCommand(NavigationService navigationService)
+        public CatCommand(NavigationService navigationService, LanguageService languageService)
         {
             _navigationService = navigationService;
+            _languageService = languageService;
         }
 
         public override Task<string> ExecuteAsync(string[] args)
@@ -146,7 +149,7 @@ namespace MeinPortfolio.Models.Commands
                 return Task.FromResult("cat: cannot display directory contents. Use 'cd <section>' to navigate to a section first.");
             }
 
-            var content = VirtualFileSystem.GetFileContent(section, filename);
+            var content = VirtualFileSystem.GetFileContent(section, filename, _languageService);
             if (content == null)
             {
                 return Task.FromResult($"cat: {filename}: No such file or directory");
@@ -155,4 +158,5 @@ namespace MeinPortfolio.Models.Commands
             return Task.FromResult(content);
         }
     }
+
 }

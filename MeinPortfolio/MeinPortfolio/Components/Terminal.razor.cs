@@ -14,6 +14,7 @@ namespace MeinPortfolio.Components
         [Inject] private NavigationService NavigationService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
+
         private List<OutputLine> _output = new();
         private string _input = "";
         private ElementReference _inputElement;
@@ -34,7 +35,7 @@ namespace MeinPortfolio.Components
             NavigationService.OnNavigate += HandleNavigate;
             LanguageService.OnLanguageChanged += OnLanguageChanged;
 
-            _output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
+            _output.Add(new OutputLine("Welcome my interactive Terminal Portfolio. Type 'help' for available commands."));
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -53,15 +54,14 @@ namespace MeinPortfolio.Components
             CommandService.RegisterCommand(new CdCommand(NavigationService));
             CommandService.RegisterCommand(new PwdCommand(NavigationService));
             CommandService.RegisterCommand(new LsCommand(NavigationService));
-            CommandService.RegisterCommand(new CatCommand(NavigationService));
+            CommandService.RegisterCommand(new CatCommand(NavigationService, LanguageService));
             CommandService.RegisterCommand(new HomeCommand(NavigationService));
 
             CommandService.RegisterCommand(new ClearCommand());
             CommandService.RegisterCommand(new DateCommand());
             CommandService.RegisterCommand(new WhoamiCommand());
-
-
-            CommandService.RegisterCommand(new CvCommand(JSRuntime));
+            
+            CommandService.RegisterCommand(new CvCommand(JSRuntime, LanguageService));;
             
             CommandService.RegisterCommand(new FunFactCommand(LanguageService));
         }
@@ -247,7 +247,7 @@ namespace MeinPortfolio.Components
             if (result.Output == "clear")
             {
                 _output.Clear();
-                _output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
+                _output.Add(new OutputLine("Welcome to my interactive Terminal Portfolio. Type 'help' for available commands."));
                 _input = "";
                 StateHasChanged();
                 return;
