@@ -1,5 +1,7 @@
 using MeinPortfolio.Services;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Components;
+
 
 namespace MeinPortfolio.Services
 {
@@ -53,12 +55,6 @@ namespace MeinPortfolio.Services
         {
             var files = GetFiles(section);
             return files.TryGetValue(filename, out var content) ? content : null;
-        }
-
-        public static bool FileExists(NavigationSection section, string filename)
-        {
-            var files = GetFiles(section);
-            return files.ContainsKey(filename);
         }
     }
 }

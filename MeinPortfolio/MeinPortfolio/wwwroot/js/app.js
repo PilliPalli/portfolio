@@ -1,17 +1,3 @@
-// Theme management
-function applyTheme(theme, colors) {
-    const root = document.documentElement;
-
-    root.style.setProperty('--terminal-bg', colors.bg);
-    root.style.setProperty('--terminal-text', colors.text);
-    root.style.setProperty('--terminal-border', colors.border);
-
-    root.style.setProperty('--terminal-header-bg', colors.bg);
-    root.style.setProperty('--terminal-header-text', colors.text);
-    root.style.setProperty('--body-bg', colors.bg);
-}
-
-
 async function downloadCv() {
     try {
         const response = await fetch('cv/cv.pdf', { cache: 'no-store' });
@@ -31,7 +17,6 @@ async function downloadCv() {
         console.error("CV-Download fehlgeschlagen:", error);
     }
 }
-
 
 // Initialize
 window.initTerminal = function () {

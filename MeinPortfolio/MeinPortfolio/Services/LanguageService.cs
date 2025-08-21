@@ -21,8 +21,7 @@ namespace MeinPortfolio.Services
         {
             get { return _currentLanguage; }
         }
-
-
+        
         public LanguageService(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
@@ -30,17 +29,17 @@ namespace MeinPortfolio.Services
 
         public async Task InitializeAsync()
         {
-            var storedLanguage = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "portfolio_language");
+            var stored = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "portfolio_language");
 
-            if (string.IsNullOrEmpty(storedLanguage) && Enum.TryParse<LanguageType>(storedLanguage, out var language))
+            if (!string.IsNullOrEmpty(stored) && Enum.TryParse(stored, out LanguageType lang))
             {
-                _currentLanguage = language;
+                _currentLanguage = lang;
             }
             else
             {
                 _currentLanguage = LanguageType.English;
             }
-
+            
             await SetCultureAsync(_currentLanguage);
             OnLanguageChanged?.Invoke(_currentLanguage);
         }
@@ -51,7 +50,7 @@ namespace MeinPortfolio.Services
             {
                 _currentLanguage = language;
                 await SetCultureAsync(language);
-                await _jsRuntime.InvokeVoidAsync("localStorage.getItem", "portfolio_language", language.ToString());
+                await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "portfolio_language", language.ToString());
                 OnLanguageChanged?.Invoke(language);
             }
         }

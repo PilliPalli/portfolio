@@ -7,24 +7,23 @@ using MeinPortfolio.Services;
 
 namespace MeinPortfolio.Components
 {
-    public partial class Terminal : IDisposable
+    public partial class Terminal
     {
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private CommandService CommandService { get; set; }
         [Inject] private NavigationService NavigationService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        private List<OutputLine> output = new();
-        private string input = "";
-        private ElementReference inputElement;
-        private bool showContactForm = false;
+        private List<OutputLine> _output = new();
+        private string _input = "";
+        private ElementReference _inputElement;
 
         private List<string> _cycleCandidates = new();
         private int _cycleIndex = -1;
         private string _cycleFixedPrefix = "";
         private string _inputBeforeCycle = "";    
 
-        private static readonly List<string> _sections = new()
+        private static readonly List<string> Sections = new()
         {
             "about", "projects", "contact", "home", "~"
         };
@@ -33,8 +32,9 @@ namespace MeinPortfolio.Components
             RegisterCommands();
             
             NavigationService.OnNavigate += HandleNavigate;
+            LanguageService.OnLanguageChanged += OnLanguageChanged;
 
-            output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
+            _output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -63,7 +63,7 @@ namespace MeinPortfolio.Components
 
             CommandService.RegisterCommand(new CvCommand(JSRuntime));
             
-            CommandService.RegisterCommand(new FunFactCommand());
+            CommandService.RegisterCommand(new FunFactCommand(LanguageService));
         }
 
         private async Task HandleKeyPress(KeyboardEventArgs e)
@@ -77,18 +77,18 @@ namespace MeinPortfolio.Components
 
                 case "ArrowUp":
                     ResetCycle();
-                    input = CommandService.GetPreviousCommand();
+                    _input = CommandService.GetPreviousCommand();
                     StateHasChanged();
                     break;
 
                 case "ArrowDown":
                     ResetCycle();
-                    input = CommandService.GetNextCommand();
+                    _input = CommandService.GetNextCommand();
                     StateHasChanged();
                     break;
 
                 case "Tab":
-                    input = GetAutoCompleteSuggestion(input); 
+                    _input = GetAutoCompleteSuggestion(_input); 
                     StateHasChanged();
                     await FocusInputAsync();
                     break;
@@ -153,7 +153,7 @@ namespace MeinPortfolio.Components
             switch (cmd)
             {
                 case "cd":
-                    return _sections.Where(s => s.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+                    return Sections.Where(s => s.StartsWith(token, StringComparison.OrdinalIgnoreCase))
                         .OrderBy(x => x);
 
                 case "cat":
@@ -220,7 +220,7 @@ namespace MeinPortfolio.Components
         }
 
 
-        private List<string> commandList = new List<string>
+        private List<string> commandList = new()
         {
             "help",
             "ls",
@@ -230,7 +230,6 @@ namespace MeinPortfolio.Components
             "whoami",
             "cd",
             "cv",
-            "theme",
             "date",
             "pwd",
             "funfact"
@@ -238,18 +237,18 @@ namespace MeinPortfolio.Components
         
         private async Task ExecuteCommandAsync()
         {
-            if (string.IsNullOrWhiteSpace(input)) return;
+            if (string.IsNullOrWhiteSpace(_input)) return;
 
-            var commandInput = input.Trim();
-            output.Add(new OutputLine($"> {commandInput}", isCommand: true));
+            var commandInput = _input.Trim();
+            _output.Add(new OutputLine($"> {commandInput}", isCommand: true));
 
             var result = await CommandService.ExecuteCommandAsync(commandInput);
 
             if (result.Output == "clear")
             {
-                output.Clear();
-                output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
-                input = "";
+                _output.Clear();
+                _output.Add(new OutputLine("Welcome to the interactive Terminal Portfolio of Moritz Kreis. Type 'help' for available commands."));
+                _input = "";
                 StateHasChanged();
                 return;
             }
@@ -258,18 +257,18 @@ namespace MeinPortfolio.Components
             {
                 if (result.IsHtml)
                 {
-                    output.Add(new OutputLine(result.Output, isHtml: true));
+                    _output.Add(new OutputLine(result.Output, isHtml: true));
                 }
                 else
                 {
                     foreach (var line in result.Output.Split('\n'))
                     {
-                        output.Add(new OutputLine(line));
+                        _output.Add(new OutputLine(line));
                     }
                 }
             }
 
-            input = "";
+            _input = "";
             await FocusInputAsync();
             StateHasChanged();
 
@@ -286,8 +285,7 @@ namespace MeinPortfolio.Components
         {
             await JSRuntime.InvokeVoidAsync("eval", "document.querySelector('.terminal-input input').focus()");
         }
-
-       
+        
 
         private void HandleNavigate(NavigationSection section)
         {
@@ -297,6 +295,12 @@ namespace MeinPortfolio.Components
         public void Dispose()
         {
             NavigationService.OnNavigate -= HandleNavigate;
+            LanguageService.OnLanguageChanged -= OnLanguageChanged;
+        }
+        
+        private void OnLanguageChanged(LanguageType language)
+        {
+            StateHasChanged();
         }
     }
 }

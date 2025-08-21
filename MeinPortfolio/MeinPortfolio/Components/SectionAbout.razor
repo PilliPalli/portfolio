@@ -1,0 +1,74 @@
+@inject LanguageService LanguageService
+@implements IDisposable
+
+<section id="about" class="section">
+    <div class="container">
+        <h2 class="section-title">@LanguageService.GetText("Über mich", "About Me")</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p class="about-intro">
+                    @LanguageService.GetText("Hallo! Ich bin Moritz, ein 22-jähriger staatlich geprüfter Wirtschaftsinformatiker und Berufseinsteiger mit einer Leidenschaft für moderne Softwareentwicklung.",
+                        "Hello! I'm Moritz, a 22-year-old certified business informatics specialist and career starter with a passion for modern software development."
+                    )
+                </p>
+                <div class="about-details">
+                    <div class="about-item">
+                        <h3>@LanguageService.GetText("Ausbildung", "Education")</h3>
+                        <p>@LanguageService.GetText("Staatlich geprüfter Wirtschaftsinformatiker", "State-certified Business Informatics Specialist")</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>@LanguageService.GetText("Fokus", "Focus")</h3>
+                        <p>@LanguageService.GetText("C#/.NET-Entwicklung", "C#/.NET development")</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>@LanguageService.GetText("Motivation", "Motivation")</h3>
+                        <p>@LanguageService.GetText("Innovative Lösungen entwickeln und mich kontinuierlich in neuen Technologien weiterentwickeln", "Building innovative solutions and continuously expanding my skills in new technologies")</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>@LanguageService.GetText("Interessen", "Interests")</h3>
+                        <ul>
+                            <li>@LanguageService.GetText("Norwegisch lernen & skandinavische Kultur", "Learning Norwegian & Scandinavian culture")</li>
+                            <li>@LanguageService.GetText("Backpacking & Wandern", "Backpacking & hiking")</li>
+                            <li>@LanguageService.GetText("C#/.NET – persönliche Lern- und Nebenprojekte", "C#/.NET – personal learning & side projects")</li>
+                            <li>@LanguageService.GetText("American Football", "American football")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="about-stats">
+                <div class="stat-item">
+                    <span class="stat-number">22</span>
+                    <span class="stat-label">@LanguageService.GetText("Jahre alt", "Years old")</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">@LanguageService.GetText("Projekte", "Projects")</span>
+                </div>
+       
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">@LanguageService.GetText("Motivation", "Motivation")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+}

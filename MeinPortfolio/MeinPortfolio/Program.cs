@@ -23,8 +23,7 @@ public class Program
         builder.Services.AddSingleton<NavigationService>();
         builder.Services.Configure<PortfolioConfig>(
             builder.Configuration.GetSection("Portfolio"));
-
-
+        
         await builder.Build().RunAsync();
     }
 }

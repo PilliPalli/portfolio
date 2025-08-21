@@ -28,8 +28,6 @@
         
     }
 
-    private void HandleAuthChanged() => InvokeAsync(StateHasChanged);
-
     protected async Task ToggleLanguage()
         => await LanguageService.SetLanguageAsync(
             LanguageService.CurrentLanguage == LanguageType.German

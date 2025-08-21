@@ -1,0 +1,26 @@
+<div class="project-card">
+    <div class="project-header">
+        <h3 class="project-title">@Project.Title</h3>
+        <div class="project-links">
+            @if (!string.IsNullOrEmpty(Project.CodeUrl))
+            {
+                <a href="@Project.CodeUrl" class="project-link" target="_blank">Code</a>
+            }
+            @if (!string.IsNullOrEmpty(Project.LiveUrl))
+            {
+                <a href="@Project.LiveUrl" class="project-link" target="_blank">Live</a>
+            }
+        </div>
+    </div>
+    <p class="project-description">@Project.Description</p>
+    <div class="project-tech">
+        @foreach (var tech in Project.TechStack)
+        {
+            <span class="tech-tag">@tech</span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public Project Project { get; set; } = new();
+}

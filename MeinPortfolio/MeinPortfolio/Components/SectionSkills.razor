@@ -1,0 +1,56 @@
+@using MeinPortfolio.Services
+@inject LanguageService LanguageService
+@implements IDisposable
+
+<section id="Skills" class="section">
+    <div class="container">
+        <h2 class="section-title">@LanguageService.GetText("Fähigkeiten & Technologien", "Skills & Technologies")</h2>
+        <div class="skills-content">
+            <div class="skill-group">
+                <h3 class="skill-group-title">@LanguageService.GetText("Programmiersprachen", "Languages")</h3>
+                <div class="skills-chips">
+                    <span class="skills-chip">C#</span>
+                    <span class="skills-chip">SQL</span>
+                    <span class="skills-chip">HTML/CSS</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3 class="skill-group-title">@LanguageService.GetText("Frameworks & Technologien", "Frameworks & Technologies")</h3>
+                <div class="skills-chips">
+                    <span class="skills-chip">Blazor</span>
+                    <span class="skills-chip">WPF</span>
+                    <span class="skills-chip">Entity Framework</span>
+                    <span class="skills-chip">ASP.NET Core</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3 class="skill-group-title">@LanguageService.GetText("Tools & Datenbanken", "Tools & Databases")</h3>
+                <div class="skills-chips">
+                    <span class="skills-chip">Git</span>
+                    <span class="skills-chip">Visual Studio</span>
+                    <span class="skills-chip">MSSQL</span>
+                    <span class="skills-chip">Jetbrains Rider</span>
+                    <span class="skills-chip">PostgreSQL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}
