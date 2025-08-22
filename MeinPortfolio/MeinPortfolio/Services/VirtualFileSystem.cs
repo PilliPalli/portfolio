@@ -17,28 +17,28 @@ namespace MeinPortfolio.Services
             [NavigationSection.Projects] = new Dictionary<string, LocalizedFile>
             {
                 ["portfolio.txt"] = new LocalizedFile(
-                    "Projekt: Interaktives Terminal-Portfolio\nBeschreibung: Eine Portfolio-Website im Terminal-Stil mit Informationen über meine Person\nTechnologien: C#, Blazor WebAssembly",
-                    "Project: Interactive terminal portfolio\nDescription: A terminal-style portfolio website with information about me\nTechnologies: C#, Blazor WebAssembly"
+                    "Projekt: Interaktives Terminal-Portfolio\nBeschreibung: Eine Portfolio-Website mit integriertem Terminal und Informationen über meine Person. Nutzer können durch Unix-ähnliche Befehle navigieren und Inhalte erkunden.\nTechnologien: C#, Blazor WebAssembly, HTML/CSS, JavaScript",
+                    "Project: Interactive Terminal Portfolio\nDescription: A portfolio website with an integrated terminal providing information about myself. Users can navigate and explore content through Unix-like commands.\nTechnologies: C#, Blazor WebAssembly, HTML/CSS, JavaScript"
                 ),
-
+                
                 ["schwimmbad-management.txt"] = new LocalizedFile(
-                    "Projekt: Schwimmbad-Verwaltung\nBeschreibung: Anwendung zur Verwaltung von Mitgliedern eines fiktiven Schwimmbads inkl. Datenbankanbindung\nTechnologien: C#, WPF, MSSQL",
-                    "Project: Swimming pool management\nDescription: App to manage members of a fictional pool incl. database integration\nTechnologies: C#, WPF, MSSQL"
+                    "Projekt: Schwimmbad-Verwaltung\nBeschreibung: Anwendung zur Verwaltung von Mitgliedern eines fiktiven Schwimmbads inklusive Datenbankanbindung und Mitgliederverwaltung.\nTechnologien: C#, WPF, MSSQL, Entity Framework",
+                    "Project: Swimming Pool Management\nDescription: Application for managing members of a fictional swimming pool including database connection and member management.\nTechnologies: C#, WPF, MSSQL, Entity Framework"
                 ),
 
                 ["garbage-collection-tool.txt"] = new LocalizedFile(
-                    "Projekt: Garbage Collection Tool\nBeschreibung: Tool zur automatisierten Löschung temporärer Dateien inkl. Scheduler, Login-System und Datenbank\nTechnologien: C#, WPF",
-                    "Project: Garbage Collection Tool\nDescription: Tool for automated deletion of temp files incl. scheduler, login system and database\nTechnologies: C#, WPF"
+                    "Projekt: Garbage Collection Tool\nBeschreibung: Tool zur automatisierten Löschung temporärer Dateien inklusive Scheduler, Login-System und Datenbank für Konfigurationsverwaltung.\nTechnologien: C#, WPF, Task Scheduling, Database",
+                    "Project: Garbage Collection Tool\nDescription: Tool for automated deletion of temporary files including scheduler, login system and a database for configuration management.\nTechnologies: C#, WPF, Task Scheduling, Database"
                 ),
 
                 ["code-commenter-tool.txt"] = new LocalizedFile(
-                    "Projekt: Code-Kommentierungstool\nBeschreibung: Anwendung zur automatischen Kommentierung von Quellcode über die ChatGPT-API, konfigurierbar nach Detailtiefe\nTechnologien: C#, WPF",
-                    "Project: Code commenting tool\nDescription: App that auto-comments source code via the ChatGPT API, configurable by detail level\nTechnologies: C#, WPF"
+                    "Projekt: Code-Kommentierungstool\nBeschreibung: Anwendung zur automatischen Kommentierung von Quellcode über die ChatGPT-API, konfigurierbar nach Detailtiefe und Programmiersprache.\nTechnologien: C#, WPF, OpenAI API, File Processing",
+                    "Project: Code Commenting Tool\nDescription: Application for automatic commenting of source code via the ChatGPT API, configurable by level of detail and programming language.\nTechnologies: C#, WPF, OpenAI API, File Processing"
                 ),
 
                 ["pdf-report-generator.txt"] = new LocalizedFile(
-                    "Projekt: PDF-Generator für eine Suchstaffel\nBeschreibung: Webanwendung zur automatischen Erstellung von PDF-Berichten für Einsätze einer Suchhundestaffel. Nutzer erfassen Einsatzdaten über ein Formular, die in einer PostgreSQL-Datenbank gespeichert und anschließend als strukturierte PDF-Berichte generiert werden. Das Tool unterstützt aktiv die Bekämpfung der Afrikanischen Schweinepest in Hessen und Rheinland-Pfalz und wird bereits von mehreren Personen im Einsatz genutzt.\nTechnologien: C#, Blazor Server, PostgreSQL",
-                    "Project: PDF report generator for a search unit\nDescription: Web app that generates PDF reports for search dog missions. Users enter mission data via a form, stored in PostgreSQL and rendered as structured PDFs. The tool supports efforts against African swine fever in Hesse and Rhineland-Palatinate and is already in active use.\nTechnologies: C#, Blazor Server, PostgreSQL"
+                    "Projekt: PDF-Generator für eine Suchstaffel\nBeschreibung: Webanwendung zur automatischen Erstellung von PDF-Berichten für Einsätze einer Suchhundestaffel. Nutzer erfassen Einsatzdaten über ein Formular, die in einer PostgreSQL-Datenbank gespeichert und anschließend als strukturierte PDF-Berichte generiert werden. Unterstützt aktiv die Bekämpfung der Afrikanischen Schweinepest in Hessen und Rheinland-Pfalz.\nTechnologien: C#, Blazor Server, PostgreSQL, PDF Generation",
+                    "Project: PDF Generator for a Search Squad\nDescription: Web application for the automatic creation of PDF reports for search dog squad operations. Users enter mission data via a form, which is stored in PostgreSQL and rendered as structured PDFs. Actively supports the fight against African Swine Fever in Hesse and Rhineland-Palatinate.\nTechnologies: C#, Blazor Server, PostgreSQL, PDF Generation"
                 )
             },
 
@@ -50,13 +50,13 @@ namespace MeinPortfolio.Services
                 )
             }
         };
-        
+
         public static IEnumerable<string> GetFileNames(NavigationSection section)
             => _fileSystem.TryGetValue(section, out var files) ? files.Keys : [];
-        
+
         public static IReadOnlyDictionary<string, LocalizedFile> GetFiles(NavigationSection section)
             => _fileSystem.TryGetValue(section, out var files) ? files : new Dictionary<string, LocalizedFile>();
-        
+
         public static string? GetFileContent(NavigationSection section, string filename, LanguageService languageService)
         {
             var files = GetFiles(section);

@@ -16,7 +16,7 @@
 </section>
 
 @code {
-    private List<Project> GetLocalizedProjects()
+    public List<Project> GetLocalizedProjects()
     {
         if (LanguageService.CurrentLanguage == LanguageType.German)
         {
@@ -25,7 +25,7 @@
                 new Project
                 {
                     Title = "Interaktives Terminal-Portfolio",
-                    Description = "Eine Portfolio-Website im Terminal-Stil mit Informationen über meine Person. Nutzer können durch Unix-ähnliche Befehle navigieren und Inhalte erkunden.",
+                    Description = "Eine Portfolio-Website mit integriertem Terminal und Informationen über meine Person. Nutzer können durch Unix-ähnliche Befehle navigieren und Inhalte erkunden.",
                     TechStack = new List<string> { "C#", "Blazor WebAssembly", "HTML/CSS", "JavaScript" },
                     CodeUrl = null,
                     LiveUrl = null
@@ -58,7 +58,7 @@
                 {
                     Title = "Garbage Collection Tool",
                     Description = "Tool zur automatisierten Löschung temporärer Dateien inklusive Scheduler, Login-System und Datenbank für Konfigurationsverwaltung.",
-                    TechStack = new List<string> { "C#", "WPF", "Task Scheduling", "Database" },
+                    TechStack = new List<string> { "C#", "WPF", "Task Scheduling", "MSSQL", "Docker" },
                     CodeUrl = null,
                     LiveUrl = null
                 }
@@ -71,7 +71,7 @@
                 new Project
                 {
                     Title = "Interactive Terminal Portfolio",
-                    Description = "A terminal-style portfolio website with information about myself. Users can navigate and explore content through Unix-like commands.",
+                    Description = "A portfolio website with an integrated terminal providing information about myself. Users can navigate and explore content through Unix-like commands.",
                     TechStack = new List<string> { "C#", "Blazor WebAssembly", "CSS", "JavaScript" },
                     CodeUrl = null,
                     LiveUrl = null
@@ -104,7 +104,7 @@
                 {
                     Title = "Garbage Collection Tool",
                     Description = "Tool for automated deletion of temporary files including scheduler, login system and database for configuration management.",
-                    TechStack = new List<string> { "C#", "WPF", "Task Scheduling", "Database" },
+                    TechStack = new List<string> { "C#", "WPF", "Task Scheduling", "MSSQL", "Docker" },
                     CodeUrl = null,
                     LiveUrl = null
                 }

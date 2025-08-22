@@ -1,6 +1,7 @@
 @inject LanguageService LanguageService
 @implements IDisposable
 
+
 <section id="about" class="section">
     <div class="container">
         <h2 class="section-title">@LanguageService.GetText("Über mich", "About Me")</h2>
@@ -26,19 +27,20 @@
                     </div>
                     <div class="about-item">
                         <h3>@LanguageService.GetText("Interessen", "Interests")</h3>
-                        <ul>
-                            <li>@LanguageService.GetText("Norwegisch lernen & skandinavische Kultur", "Learning Norwegian & Scandinavian culture")</li>
-                            <li>@LanguageService.GetText("Backpacking & Wandern", "Backpacking & hiking")</li>
-                            <li>@LanguageService.GetText("C#/.NET – persönliche Lern- und Nebenprojekte", "C#/.NET – personal learning & side projects")</li>
-                            <li>@LanguageService.GetText("American Football", "American football")</li>
-                        </ul>
+                        <p>
+                            @LanguageService.GetText(
+                                "Norwegisch lernen & skandinavische Kultur, Backpacking & Wandern, C#/.NET – persönliche Lern- und Nebenprojekte sowie American Football.",
+                                "Learning Norwegian & Scandinavian culture, backpacking & hiking, C#/.NET – personal learning & side projects, and American football."
+                            )
+                        </p>
                     </div>
+
                 </div>
             </div>
             <div class="about-stats">
                 <div class="stat-item">
-                    <span class="stat-number">22</span>
-                    <span class="stat-label">@LanguageService.GetText("Jahre alt", "Years old")</span>
+                        <span class="stat-number">@Age</span>
+                        <span class="stat-label">@LanguageService.GetText("Jahre alt", "Years old")</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">5+</span>
@@ -56,6 +58,17 @@
 
 
 @code {
+    
+    private static readonly DateTime BirthDate = new DateTime(2002, 9, 3); 
+
+    private int Age {
+        get {
+            var today = DateTime.Today;
+            var age = today.Year - BirthDate.Year;
+            if (BirthDate.Date > today.AddYears(-age)) age--;
+            return age;
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
         LanguageService.OnLanguageChanged += OnLanguageChanged;
@@ -70,5 +83,7 @@
     {
         LanguageService.OnLanguageChanged -= OnLanguageChanged;
     }
+    
+   
 
 }
