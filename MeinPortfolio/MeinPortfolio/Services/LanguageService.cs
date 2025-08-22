@@ -13,7 +13,7 @@ namespace MeinPortfolio.Services
     {
 
         private readonly IJSRuntime _jsRuntime;
-        private LanguageType _currentLanguage = LanguageType.English;
+        private LanguageType _currentLanguage = LanguageType.German;
 
         public event Action<LanguageType>? OnLanguageChanged;
 
@@ -37,10 +37,10 @@ namespace MeinPortfolio.Services
             }
             else
             {
-                _currentLanguage = LanguageType.English;
+                _currentLanguage = LanguageType.German;
             }
             
-            await SetCultureAsync(_currentLanguage);
+            await SetCulture(_currentLanguage);
             OnLanguageChanged?.Invoke(_currentLanguage);
         }
 
@@ -49,13 +49,13 @@ namespace MeinPortfolio.Services
             if (_currentLanguage != language)
             {
                 _currentLanguage = language;
-                await SetCultureAsync(language);
+                await SetCulture(language);
                 await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "portfolio_language", language.ToString());
                 OnLanguageChanged?.Invoke(language);
             }
         }
 
-        private async Task SetCultureAsync(LanguageType language)
+        private Task SetCulture(LanguageType language)
         {
             string culture;
             if (language == LanguageType.German)
@@ -69,6 +69,7 @@ namespace MeinPortfolio.Services
 
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+            return Task.CompletedTask;
         }
 
         public string GetText(string germanText, string englishText)
