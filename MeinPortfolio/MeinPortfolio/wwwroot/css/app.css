@@ -183,7 +183,7 @@ body {
 
 /* ============ Sections ============ */
 /* Intro */
-.intro-section { min-height: 100vh; display: flex; align-items: center; padding: 4rem 0; border-bottom: 1px solid var(--border-color); }
+.intro-section { min-height: 100vh;  box-sizing: border-box;  display: flex; align-items: center; padding: 4rem 0; border-bottom: 1px solid var(--border-color); }
 .intro-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; width: 100%; }
 .intro-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; justify-items: center; }
 .intro-text { max-width: 500px; }
