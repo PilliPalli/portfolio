@@ -15,7 +15,7 @@
                 aria-expanded="@isMenuOpen"
                 aria-controls="primary-nav"
                 aria-label="Menü öffnen/schließen">
-            ☰
+            <img src="images/hamburger.svg" alt="hamburger-icon"/>
         </button>
 
         <div id="primary-nav" class="nav-links @(isMenuOpen ? "open" : null)">
@@ -61,10 +61,19 @@
     }
 
     protected async Task ToggleLanguage()
-        => await LanguageService.SetLanguageAsync(
-            LanguageService.CurrentLanguage == LanguageType.German
-                ? LanguageType.English
-                : LanguageType.German);
+    {
+        if (LanguageService.CurrentLanguage == LanguageType.German)
+        {
+            await LanguageService.SetLanguageAsync(LanguageType.English);
+        }
+        else
+        {
+            await LanguageService.SetLanguageAsync(LanguageType.German);
+        }
+        CloseMenu();
+    }
+
+
 
     private void OnLanguageChanged(LanguageType _) => StateHasChanged();
 

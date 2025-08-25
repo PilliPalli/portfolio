@@ -1,12 +1,21 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@inject LanguageService LanguageService
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
-        <PageTitle>Not found</PageTitle>
+        <PageTitle>404</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <div class="notfound-page">
+                <div class="notfound-wrapper">
+                    <h1>404</h1>
+                    <p>@LanguageService.GetText("Sorry, diese Seite existiert nicht", "Sorry, there's nothing at this address")</p>
+                    <a href="/">@LanguageService.GetText("Startseite", "Home")</a>
+                </div>
+            </div>
         </LayoutView>
     </NotFound>
+
 </Router>
