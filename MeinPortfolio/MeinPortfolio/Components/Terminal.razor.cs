@@ -35,7 +35,7 @@ namespace MeinPortfolio.Components
             NavigationService.OnNavigate += HandleNavigate;
             LanguageService.OnLanguageChanged += OnLanguageChanged;
 
-            _output.Add(new OutputLine("Welcome my interactive Terminal Portfolio. Type 'help' for available commands."));
+            _output.Add(new OutputLine("Welcome to my interactive Terminal Portfolio. Type 'help' for available commands."));
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
