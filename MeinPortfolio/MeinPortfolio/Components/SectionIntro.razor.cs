@@ -7,7 +7,7 @@ using MeinPortfolio.Services;
 
 namespace MeinPortfolio.Components
 {
-    public partial class Terminal
+    public partial class SectionIntro
     {
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private CommandService CommandService { get; set; }
