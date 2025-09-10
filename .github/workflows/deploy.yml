@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Deployment startet bei Änderungen auf main
+      - ai
 
 jobs:
   deploy:

@@ -1,6 +1,5 @@
 @using MeinPortfolio.Services
 @inject LanguageService LanguageService
-@implements IDisposable
 
 
 <section id="home" class="intro-section">
@@ -15,8 +14,7 @@
                 </p>
                 <div class="intro-buttons">
                     <a href="#projects" class="btn btn-primary">@LanguageService.GetText("Meine Arbeit", "My Work")</a>
-                    <a href="@CvPath"  class="btn btn-outline" target="_blank">@LanguageService.GetText("Lebenslauf herunterladen", "Download CV")</a>
-                </div>
+                    <a href="@LanguageService.GetCvPath()" class="btn btn-outline" target="_blank">@LanguageService.GetText("Lebenslauf herunterladen", "Download CV")</a>                </div>
             </div>
             <div class="intro-terminal">
                 <div class="terminal">
@@ -51,21 +49,4 @@
         </div>
     </div>
 </section>
-
-@code {
-    private string CvPath
-    {
-        get
-        {
-            if (LanguageService.CurrentLanguage == LanguageType.German)
-            {
-                return "cv/CV_DE.pdf";
-            }
-            else
-            {
-                return "cv/CV_EN.pdf";
-            }
-        }
-    }
-}
 

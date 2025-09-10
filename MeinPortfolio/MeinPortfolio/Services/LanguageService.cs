@@ -86,6 +86,18 @@ namespace MeinPortfolio.Services
 
             return language;
         }
+        
+        public string GetCvPath()
+        {
+            if (_currentLanguage == LanguageType.German)
+            {
+                return "cv/CV_DE.pdf";
+            }
+            else
+            {
+                return "cv/CV_EN.pdf";
+            }
+        }
     }
     
 }
