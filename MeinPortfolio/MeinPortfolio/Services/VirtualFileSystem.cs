@@ -9,8 +9,8 @@ namespace MeinPortfolio.Services
             [NavigationSection.About] = new Dictionary<string, LocalizedFile>
             {
                 ["bio.txt"] = new LocalizedFile(
-                    "Name: Moritz Nicola Kreis\nAlter: 22 Jahre alt\nAbschluss: Staatlich geprüfter Wirtschaftsinformatiker\nErfahrung: Berufseinsteiger\nKenntnisse: C#, Blazor, Git, SQL\nInteressen: Norwegisch lernen & skandinavische Kultur, Freunde treffen",
-                    "Name: Moritz Nicola Kreis\nAge: 22 years old\nDegree: State-certified Business Informatics Specialist\nExperience: Entry level\nSkills: C#, Blazor, Git, SQL\nInterests: learning norwegian & scandinavian culture, meeting friends"
+                    "Name: Moritz Nicola Kreis\nAlter: 23 Jahre alt\nAbschluss: Staatlich geprüfter Wirtschaftsinformatiker\nErfahrung: Berufseinsteiger\nKenntnisse: C#, Blazor, Git, SQL\nInteressen: Norwegisch lernen & skandinavische Kultur, Freunde treffen",
+                    "Name: Moritz Nicola Kreis\nAge: 23 years old\nDegree: State-certified Business Informatics Specialist\nExperience: Entry level\nSkills: C#, Blazor, Git, SQL\nInterests: learning norwegian & scandinavian culture, meeting friends"
                 )
             },
 
@@ -45,8 +45,8 @@ namespace MeinPortfolio.Services
             [NavigationSection.Contact] = new Dictionary<string, LocalizedFile>
             {
                 ["email.txt"] = new LocalizedFile(
-                    "E-Mail: bewerbung@moritz-kreis.de",
-                    "Email: bewerbung@moritz-kreis.de"
+                    "E-Mail: mail@moritz-kreis.de",
+                    "Email: mail@moritz-kreis.de"
                 )
             }
         };
