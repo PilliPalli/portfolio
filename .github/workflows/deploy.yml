@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main  # Deployment startet bei Änderungen auf main
+      - main
       - ai
 
 jobs:
