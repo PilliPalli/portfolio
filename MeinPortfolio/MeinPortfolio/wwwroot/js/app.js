@@ -1,52 +1,54 @@
 
-    async function downloadCv(url, fileName) {
+async function downloadCv(url, fileName) {
     try {
-    const resolvedUrl = new URL(url, document.baseURI).href;
+        const resolvedUrl = new URL(url, document.baseURI).href;
 
-    const response = await fetch(resolvedUrl, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Fehler beim Abrufen der Datei: ${response.status}`);
+        const response = await fetch(resolvedUrl, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Fehler beim Abrufen der Datei: ${response.status}`);
 
-    const blob = await response.blob();
-    const objectUrl = window.URL.createObjectURL(blob);
+        const blob = await response.blob();
+        const objectUrl = window.URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = objectUrl;
-    a.download = fileName || "CV.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(objectUrl);
-} catch (error) {
-    console.error("CV-Download fehlgeschlagen:", error);
-    // Fallback: im Tab öffnen (z. B. für iOS Safari)
-    try { window.open(url, "_blank"); } catch {}
+        const a = document.createElement("a");
+        a.href = objectUrl;
+        a.download = fileName || "CV.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(objectUrl);
+    } catch (error) {
+        console.error("CV-Download fehlgeschlagen:", error);
+        // Fallback: im Tab öffnen (z. B. für iOS Safari)
+        try { window.open(url, "_blank"); } catch {}
+    }
 }
-}
-    window.downloadCv = downloadCv;
+window.downloadCv = downloadCv;
 
 
-// Initialize
 window.initTerminal = function () {
     window.terminalReady = true;
-
-    const input = document.querySelector('.terminal-input input');
-    if (input) {
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-            }
-        });
-
-        input.addEventListener('keyup', (e) => {
-            if (e.key === 'Tab') {
-                setTimeout(() => input.focus(), 0);
-            }
-        });
-    }
-
     console.log('Terminal initialized');
 };
 
+window.bindTerminalInput = function () {
+    const input = document.querySelector('.terminal-input input');
+    if (!input) return;
+
+    if (input._terminalBound) return;
+    input._terminalBound = true;
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+        }
+    });
+
+    input.addEventListener('keyup', (e) => {
+        if (e.key === 'Tab') {
+            setTimeout(() => input.focus(), 0);
+        }
+    });
+};
 
 
 // Text animation
@@ -57,10 +59,10 @@ window.animateText = function(text, elementId, speed = 50) {
             resolve();
             return;
         }
-        
+
         element.textContent = '';
         let i = 0;
-        
+
         const interval = setInterval(() => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
@@ -78,3 +80,20 @@ window.scrollTerminalToBottom = function () {
         el.scrollTop = el.scrollHeight;
     }
 };
+window.downloadZip = function(zipBytes, fileName) {
+    try {
+        const blob = new Blob([new Uint8Array(zipBytes)], { type: 'application/zip' });
+        const objectUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = objectUrl;
+        a.download = fileName || "generated-code.zip";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(objectUrl);
+    } catch (error) {
+        console.error("ZIP-Download fehlgeschlagen:", error);
+    }
+};
+
