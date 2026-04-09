@@ -80,20 +80,3 @@ window.scrollTerminalToBottom = function () {
         el.scrollTop = el.scrollHeight;
     }
 };
-window.downloadZip = function(zipBytes, fileName) {
-    try {
-        const blob = new Blob([new Uint8Array(zipBytes)], { type: 'application/zip' });
-        const objectUrl = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = objectUrl;
-        a.download = fileName || "generated-code.zip";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(objectUrl);
-    } catch (error) {
-        console.error("ZIP-Download fehlgeschlagen:", error);
-    }
-};
-

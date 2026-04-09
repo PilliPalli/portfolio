@@ -4,21 +4,13 @@ using MeinPortfolio.Models.Commands;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace MeinPortfolio.Components;
 
-public partial class SectionIntro : ComponentBase, IDisposable
+public partial class SectionIntro : ComponentBase
 {
-    [Inject] private IHttpClientFactory HttpFactory { get; set; } = default!;
-
-    private enum Panel { Terminal, CodeGen }
-    private Panel ActivePanel { get; set; } = Panel.Terminal;
-
     private List<OutputLine> _output = new();
     private string _input = "";
-    private ElementReference _inputElement;
 
     private List<string> _cycleCandidates = new();
     private int _cycleIndex = -1;
@@ -30,14 +22,7 @@ public partial class SectionIntro : ComponentBase, IDisposable
         "about", "projects", "contact", "home", "~"
     };
 
-    // AI CodeGen fields
-    private string _prompt = "";
-    private string _selectedLanguage = "C#";
-    private bool _isGenerating = false;
-    private string _statusMessage = "";
-    private bool _isError = false;
-
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
         RegisterCommands();
 
@@ -45,21 +30,7 @@ public partial class SectionIntro : ComponentBase, IDisposable
         LanguageService.OnLanguageChanged += OnLanguageChanged;
 
         _output.Add(new OutputLine("Welcome to my interactive Terminal Portfolio. Type 'help' for available commands."));
-    }
-
-    private async Task SwitchPanelAsync(Panel panel)
-    {
-        ActivePanel = panel;
-        StateHasChanged();
-        if (panel == Panel.Terminal)
-        {
-            await InvokeAsync(async () =>
-            {
-                await Task.Yield();
-                await FocusInputAsync();
-                await JSRuntime.InvokeVoidAsync("bindTerminalInput");
-            });
-        }
+        return Task.CompletedTask;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -89,12 +60,6 @@ public partial class SectionIntro : ComponentBase, IDisposable
         CommandService.RegisterCommand(new CvCommand(JSRuntime, LanguageService));
 
         CommandService.RegisterCommand(new FunFactCommand(LanguageService));
-
-        // AI: CodeGen command nur wenn Feature aktiviert
-        if (Features.AiEnabled)
-        {
-            CommandService.RegisterCommand(new CodeGenCommand(HttpFactory, JSRuntime));
-        }
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
@@ -244,7 +209,6 @@ public partial class SectionIntro : ComponentBase, IDisposable
         return _cycleFixedPrefix + _cycleCandidates[_cycleIndex];
     }
 
-    // Command list: dynamisch je nach Feature Toggle
     private List<string> CommandList
     {
         get
@@ -253,10 +217,6 @@ public partial class SectionIntro : ComponentBase, IDisposable
             {
                 "help", "ls", "cat", "home", "clear", "whoami", "cd", "cv", "date", "pwd", "funfact"
             };
-            if (Features.AiEnabled)
-            {
-                list.Add("codegen");
-            }
             return list;
         }
     }
@@ -309,87 +269,6 @@ public partial class SectionIntro : ComponentBase, IDisposable
     private void HandleNavigate(NavigationSection section)
     {
         StateHasChanged();
-    }
-
-    // AI: Code-Generator im Panel
-    private async Task GenerateCode()
-    {
-        if (string.IsNullOrWhiteSpace(_prompt))
-        {
-            _statusMessage = LanguageService.GetText("Bitte gib einen Prompt ein.", "Please enter a prompt.");
-            _isError = true;
-            return;
-        }
-
-        if (_prompt.Trim().Length < 10)
-        {
-            _statusMessage = LanguageService.GetText(
-                "Der Prompt muss mindestens 10 Zeichen lang sein.",
-                "Prompt must be at least 10 characters long.");
-            _isError = true;
-            return;
-        }
-
-        _isGenerating = true;
-        _statusMessage = "";
-        _isError = false;
-        StateHasChanged();
-
-        try
-        {
-            var request = new
-            {
-                prompt = _prompt,
-                language = _selectedLanguage
-            };
-
-            var api = HttpFactory.CreateClient("CodeGenApi");
-            using var resp = await api.PostAsJsonAsync("/api/generate", request);
-
-            if (!resp.IsSuccessStatusCode)
-            {
-                if (resp.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-                {
-                    _statusMessage = LanguageService.GetText("Rate-Limit erreicht. Bitte 15 Sekunden warten.", "Rate limit reached. Please wait 15 seconds.");
-                }
-                else
-                {
-                    var err = await resp.Content.ReadAsStringAsync();
-                    _statusMessage = LanguageService.GetText($"Fehler: {err}", $"Error: {err}");
-                }
-                _isError = true;
-                return;
-            }
-
-            var zipBytes = await resp.Content.ReadAsByteArrayAsync();
-            var fileName = $"generated-code-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
-            await JSRuntime.InvokeVoidAsync("downloadZip", zipBytes, fileName);
-
-            _statusMessage = LanguageService.GetText(
-                $"Code erfolgreich generiert! Download von {fileName} gestartet...",
-                $"Code generated successfully! Download of {fileName} started...");
-            _isError = false;
-        }
-        catch (HttpRequestException)
-        {
-            _statusMessage = LanguageService.GetText(
-                "Fehler: Code-Generator-Service nicht erreichbar.",
-                "Error: Code generator service unavailable.");
-            _isError = true;
-        }
-        catch (Exception ex)
-        {
-            _statusMessage = LanguageService.GetText(
-                $"Unerwarteter Fehler: {ex.Message}",
-                $"Unexpected error: {ex.Message}");
-            _isError = true;
-        }
-        finally
-        {
-            _isGenerating = false;
-            _prompt = "";
-            StateHasChanged();
-        }
     }
 
     private void OnLanguageChanged(LanguageType language)

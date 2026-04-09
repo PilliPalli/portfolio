@@ -5,7 +5,6 @@
 @inject NavigationService NavigationService
 @inject CommandService CommandService
 @inject NavigationManager NavigationManager
-@inject FeatureFlags Features
 @inject IJSRuntime JSRuntime
 @implements IDisposable
 
@@ -16,18 +15,9 @@
                 <h1 class="intro-title">Moritz Kreis</h1>
                 <h2 class="intro-subtitle">C#/.NET Developer</h2>
                 <p class="intro-description">
-                    @if (Features.AiEnabled)
-                    {
-                        @LanguageService.GetText(
-                            "Staatlich geprüfter Wirtschaftsinformatiker mit Schwerpunkt Anwendungsentwicklung. Entdecke mein interaktives Terminal-Portfolio, nutze den API-gestützten Code-Generator oder blättere durch die klassische Übersicht.",
-                            "State-certified Business Informatics Specialist, specialized in software development. Explore my interactive terminal portfolio, try the API-powered code generator, or browse the classic overview.")
-                    }
-                    else
-                    {
-                        @LanguageService.GetText(
-                            "Staatlich geprüfter Wirtschaftsinformatiker mit Schwerpunkt Anwendungsentwicklung. Entdecke mein interaktives Terminal-Portfolio oder scrolle durch die klassische Übersicht.",
-                            "State-certified business IT specialist with a focus on software development. Explore my interactive terminal portfolio or scroll through the classic overview.")
-                    }
+                    @LanguageService.GetText(
+                        "Staatlich geprüfter Wirtschaftsinformatiker mit Schwerpunkt Anwendungsentwicklung. Entdecke mein interaktives Terminal-Portfolio oder scrolle durch die klassische Übersicht.",
+                        "State-certified business IT specialist with a focus on software development. Explore my interactive terminal portfolio or scroll through the classic overview.")
                 </p>
                 <div class="intro-buttons">
                     <a href="#projects" class="btn btn-primary">@LanguageService.GetText("Meine Arbeit", "My Work")</a>
@@ -36,107 +26,34 @@
             </div>
 
             <div class="intro-panel">
-                <div class="panel">
-                    <div class="panel-tabs">
-                        <button class="tab @(ActivePanel == Panel.Terminal ? "active" : null)"
-                                @onclick="async () => await SwitchPanelAsync(Panel.Terminal)">
-                            Terminal
-                        </button>
-
-                        @if (Features.AiEnabled)
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div>Terminal Portfolio - @NavigationService.GetSectionPath()</div>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        @foreach (var line in _output)
                         {
-                            <button class="tab @(ActivePanel == Panel.CodeGen ? "active" : null)"
-                                    @onclick="async () => await SwitchPanelAsync(Panel.CodeGen)">
-                                @LanguageService.GetText("Code Generator", "Code Generator")
-                            </button>
+                            if (line.IsHtml)
+                            {
+                                <div>@((MarkupString)line.Content)</div>
+                            }
+                            else
+                            {
+                                <div>@line.Content</div>
+                            }
                         }
                     </div>
-
-                    <div class="panel-body">
-                        @if (ActivePanel == Panel.Terminal)
-                        {
-                            <div class="terminal">
-                                <div class="terminal-header">
-                                    <div>Terminal Portfolio - @NavigationService.GetSectionPath()</div>
-                                </div>
-                                <div class="terminal-body" id="terminal-body">
-                                    @foreach (var line in _output)
-                                    {
-                                        if (line.IsHtml)
-                                        {
-                                            <div>@((MarkupString)line.Content)</div>
-                                        }
-                                        else
-                                        {
-                                            <div>@line.Content</div>
-                                        }
-                                    }
-                                </div>
-                                <div class="terminal-input">
-                                    <span>$ </span>
-                                    <input
-                                        @bind="_input"
-                                        @bind:event="oninput"
-                                        @onkeydown="HandleKeyPress"
-                                        @onkeydown:stopPropagation
-                                        @ref="_inputElement"
-                                        autofocus />
-                                </div>
-                            </div>
-                        }
-                        else if (Features.AiEnabled && ActivePanel == Panel.CodeGen)
-                        {
-                            <div class="codegen">
-                                <p class="codegen-description">
-                                    @LanguageService.GetText(
-                                        "Gib einen Prompt ein und erhalte lauffähigen Beispielcode als ZIP-Datei. Das System entscheidet automatisch zwischen Einzeldatei oder Projekt.",
-                                        "Enter a prompt and receive executable sample code as a ZIP file. The system automatically decides between single file or project.")
-                                </p>
-
-                                <div class="codegen-form">
-                                    <div class="form-group">
-                                        <label for="prompt-input">@LanguageService.GetText("Prompt", "Prompt")</label>
-                                        <textarea id="prompt-input"
-                                              @bind="_prompt"
-                                              placeholder="@LanguageService.GetText("Beschreibe den gewünschten Code...", "Describe the desired code...")"
-                                               ></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="language-select">@LanguageService.GetText("Sprache", "Language")</label>
-                                        <select id="language-select" @bind="_selectedLanguage">
-                                            <option value="C#">C#</option>
-                                            <option value="Java">Java</option>
-                                            <option value="C++">C++</option>
-                                            <option value="JavaScript">JavaScript</option>
-                                            <option value="Python">Python</option>
-                                        </select>
-                                    </div>
-
-                                    <button class="btn btn-primary" @onclick="GenerateCode" disabled="@_isGenerating">
-                                        @if (_isGenerating)
-                                        {
-                                            <span>@LanguageService.GetText("Code wird generiert...", "Generating code...")</span>
-                                        }
-                                        else
-                                        {
-                                            <span>@LanguageService.GetText("Code generieren", "Generate Code")</span>
-                                        }
-                                    </button>
-
-                                    @if (!string.IsNullOrEmpty(_statusMessage))
-                                    {
-                                        <div class="status-message @(_isError ? "error" : "success")">
-                                            @_statusMessage
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
+                    <div class="terminal-input">
+                        <span>$ </span>
+                        <input
+                            @bind="_input"
+                            @bind:event="oninput"
+                            @onkeydown="HandleKeyPress"
+                            @onkeydown:stopPropagation
+                            autofocus />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-

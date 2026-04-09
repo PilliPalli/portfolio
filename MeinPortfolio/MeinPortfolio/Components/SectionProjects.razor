@@ -1,7 +1,6 @@
 @using MeinPortfolio.Models
 @using MeinPortfolio.Services
 @inject LanguageService LanguageService
-@inject FeatureFlags Features
 @implements IDisposable
 
 <section id="projects" class="section">
@@ -26,12 +25,8 @@
                 new Project
                 {
                     Title = "Interaktives Terminal-Portfolio",
-                    Description = Features.AiEnabled
-                        ? "Eine Blazor-basierte Portfolio-Website mit klassischer Übersicht, interaktivem Terminal und eigenständigem API-gestütztem Code-Generator. Nutzer können über Unix-ähnliche Befehle navigieren, Inhalte erkunden oder den Code-Generator verwenden."
-                        : "Eine Portfolio-Website mit integriertem Terminal und Informationen über meine Person. Nutzer können durch Unix-ähnliche Befehle navigieren und Inhalte erkunden.",
-                    TechStack = Features.AiEnabled
-                        ? new List<string> { "C#", "Blazor WebAssembly", "HTML/CSS", "JavaScript", "OpenAI API" }
-                        : new List<string> { "C#", "Blazor WebAssembly", "HTML/CSS", "JavaScript" },
+                    Description = "Eine Portfolio-Website mit integriertem Terminal und Informationen über meine Person. Nutzer können durch Unix-ähnliche Befehle navigieren und Inhalte erkunden.",
+                    TechStack = new List<string> { "C#", "Blazor WebAssembly", "HTML/CSS", "JavaScript" },
                     CodeUrl = null,
                     LiveUrl = null
                 },
@@ -76,12 +71,8 @@
                 new Project
                 {
                     Title = "Interactive Terminal Portfolio",
-                    Description = Features.AiEnabled
-                        ? "A Blazor-based portfolio website with a classic overview, an interactive terminal, and a standalone API-powered code generator. Users can navigate using Unix-like commands, explore content, or try the code generator."
-                        : "A portfolio website with an integrated terminal providing information about myself. Users can navigate and explore content through Unix-like commands.",
-                    TechStack = Features.AiEnabled
-                        ? new List<string> { "C#", "Blazor WebAssembly", "HTML/CSS", "JavaScript", "OpenAI API" }
-                        : new List<string> { "C#", "Blazor WebAssembly", "CSS", "JavaScript" },
+                    Description = "A portfolio website with an integrated terminal providing information about myself. Users can navigate and explore content through Unix-like commands.",
+                    TechStack = new List<string> { "C#", "Blazor WebAssembly", "CSS", "JavaScript" },
                     CodeUrl = null,
                     LiveUrl = null
                 },
