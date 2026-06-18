@@ -7,6 +7,7 @@ namespace MeinPortfolio.Services
     {
         Home,
         About,
+        Experience,
         Projects,
         Contact,
     }
@@ -48,6 +49,7 @@ namespace MeinPortfolio.Services
             {
                 NavigationSection.Home => "~",
                 NavigationSection.About => "~/about",
+                NavigationSection.Experience => "~/experience",
                 NavigationSection.Projects => "~/projects",
                 NavigationSection.Contact => "~/contact",
                 _ => "~"

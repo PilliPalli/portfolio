@@ -1,0 +1,244 @@
+@page "/datenschutz"
+@inject LanguageService LanguageService
+@implements IDisposable
+
+<PageTitle>@LanguageService.GetText("Datenschutzerklärung", "Privacy policy") - Moritz Kreis</PageTitle>
+
+<article class="legal-page">
+    <h1>@LanguageService.GetText("Datenschutzerklärung", "Privacy policy")</h1>
+
+    @if (LanguageService.CurrentLanguage == LanguageType.German)
+    {
+        <p>Stand: 28. Juli 2026</p>
+
+        <h2>1. Verantwortlicher</h2>
+        <address>
+            Moritz Nicola Kreis<br />
+            E-Mail: <a href="mailto:mail@moritz-kreis.de">mail@moritz-kreis.de</a>
+        </address>
+
+        <h2>2. Hosting über GitHub Pages</h2>
+        <p>
+            Diese Website wird über GitHub Pages bereitgestellt. Anbieter ist GitHub, Inc.,
+            88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf einer
+            GitHub-Pages-Website wird die IP-Adresse des Besuchers nach Angaben von GitHub
+            zu Sicherheitszwecken protokolliert und gespeichert. Darüber hinaus können
+            insbesondere Zeitpunkt und Ziel der Anfrage, Browser- und Geräteinformationen
+            sowie die zuvor besuchte Seite verarbeitet werden.
+        </p>
+        <p>
+            Die Verarbeitung erfolgt zur sicheren und zuverlässigen Bereitstellung dieser
+            Website auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse
+            liegt in der sicheren, stabilen und effizienten Präsentation meines Portfolios.
+            GitHub verarbeitet Daten auch in den USA und anderen Drittländern. GitHub nennt
+            hierfür insbesondere das EU-US Data Privacy Framework und die
+            Standardvertragsklauseln der Europäischen Kommission als Übermittlungsmechanismen.
+        </p>
+        <p>
+            Weitere Informationen:
+            <a href="https://docs.github.com/de/pages/getting-started-with-github-pages/what-is-github-pages"
+               target="_blank" rel="noopener noreferrer">Datenerhebung bei GitHub Pages</a>
+            und
+            <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement"
+               target="_blank" rel="noopener noreferrer">Datenschutzerklärung von GitHub</a>.
+        </p>
+
+        <h2>3. Browser-Speicher</h2>
+        <p>
+            Die gewählte Sprache wird unter dem Schlüssel <code>portfolio_language</code>
+            im lokalen Speicher des Browsers gespeichert. Dies dient ausschließlich dazu,
+            die ausdrücklich gewählte Sprache bei einem späteren Besuch wiederherzustellen.
+            Die Information bleibt auf dem Endgerät und wird nicht an mich übertragen.
+            Rechtsgrundlage für den Zugriff auf den Browser-Speicher ist § 25 Abs. 2 Nr. 2 TDDDG.
+        </p>
+        <p>
+            Für die korrekte Weiterleitung innerhalb der clientseitigen Anwendung kann die
+            aufgerufene Route kurzzeitig im Sitzungsspeicher des Browsers gespeichert werden.
+            Dieser Eintrag wird nach der Weiterleitung gelöscht und spätestens mit dem Ende
+            der Browsersitzung entfernt. Auch diese Speicherung ist für den ausdrücklich
+            angeforderten Seitenaufruf erforderlich.
+        </p>
+
+        <h2>4. Externe Fun-Fact-API</h2>
+        <p>
+            Nur wenn im interaktiven Terminal ausdrücklich der Befehl <code>funfact</code>
+            ausgeführt wird, stellt der Browser eine Verbindung zur „Random Useless Facts API“
+            unter <code>uselessfacts.jsph.pl</code> her. Dabei werden technisch mindestens die
+            IP-Adresse, Zeitpunkt und Ziel der Anfrage, Browserinformationen sowie die gewählte
+            Sprachkennung an den API-Anbieter übermittelt. Ohne die Nutzung dieses Befehls
+            findet keine Verbindung zu diesem Dienst statt.
+        </p>
+        <p>
+            Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Mein
+            berechtigtes Interesse liegt in der Bereitstellung der vom Besucher ausdrücklich
+            aufgerufenen interaktiven Funktion. Dem steht nur die technisch erforderliche
+            Einzelanfrage gegenüber. Wer keine Übermittlung wünscht, kann auf den Befehl
+            <code>funfact</code> verzichten.
+        </p>
+        <p>
+            Informationen zum Dienst:
+            <a href="https://uselessfacts.jsph.pl/" target="_blank" rel="noopener noreferrer">
+                uselessfacts.jsph.pl
+            </a>.
+        </p>
+
+        <h2>5. Kontaktaufnahme per E-Mail</h2>
+        <p>
+            Bei einer Kontaktaufnahme per E-Mail verarbeite ich die übermittelten Angaben zur
+            Bearbeitung der Anfrage. Soweit die Anfrage auf die Anbahnung eines Vertrags- oder
+            Beschäftigungsverhältnisses gerichtet ist, erfolgt dies auf Grundlage von
+            Art. 6 Abs. 1 lit. b DSGVO beziehungsweise § 26 BDSG. In anderen Fällen erfolgt
+            die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Das berechtigte
+            Interesse liegt in der Beantwortung der Anfrage. Die Daten werden gelöscht, sobald
+            sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen
+            Aufbewahrungspflichten entgegenstehen.
+        </p>
+
+        <h2>6. Externe Links</h2>
+        <p>
+            Auf dieser Website befinden sich Links zu externen Angeboten wie GitHub und
+            LinkedIn. Eine Verbindung zu diesen Anbietern wird erst hergestellt, wenn ein
+            entsprechender Link angeklickt wird. Ab diesem Zeitpunkt gelten die
+            Datenschutzbestimmungen des jeweiligen Anbieters.
+        </p>
+
+        <h2>7. Cookies und Reichweitenmessung</h2>
+        <p>
+            Diese Website setzt selbst keine Cookies ein und verwendet keine Analyse-,
+            Werbe- oder Trackingdienste. Es findet keine eigene Reichweitenmessung und keine
+            Profilbildung statt.
+        </p>
+
+        <h2>8. Rechte betroffener Personen</h2>
+        <p>
+            Im Rahmen der gesetzlichen Voraussetzungen bestehen insbesondere die Rechte auf
+            Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+            Datenübertragbarkeit und Widerspruch. Eine erteilte Einwilligung kann jederzeit
+            mit Wirkung für die Zukunft widerrufen werden. Außerdem besteht das Recht, sich
+            bei einer Datenschutzaufsichtsbehörde zu beschweren.
+        </p>
+
+    }
+    else
+    {
+        <p>Last updated: July 28, 2026</p>
+
+        <h2>1. Controller</h2>
+        <address>
+            Moritz Nicola Kreis<br />
+            Email: <a href="mailto:mail@moritz-kreis.de">mail@moritz-kreis.de</a>
+        </address>
+
+        <h2>2. Hosting through GitHub Pages</h2>
+        <p>
+            This website is provided through GitHub Pages. The provider is GitHub, Inc.,
+            88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. According to GitHub,
+            a visitor's IP address is logged and stored for security purposes whenever a
+            GitHub Pages website is accessed. GitHub may also process the time and destination
+            of the request, browser and device information, and the referring page.
+        </p>
+        <p>
+            This processing is necessary to provide the website securely and reliably and is
+            based on Article 6(1)(f) GDPR. My legitimate interest is the secure, stable, and
+            efficient presentation of my portfolio. GitHub also processes data in the United
+            States and other third countries. GitHub identifies the EU-US Data Privacy
+            Framework and the European Commission's Standard Contractual Clauses, in
+            particular, as transfer mechanisms.
+        </p>
+        <p>
+            Further information:
+            <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
+               target="_blank" rel="noopener noreferrer">Data collection by GitHub Pages</a>
+            and the
+            <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+               target="_blank" rel="noopener noreferrer">GitHub Privacy Statement</a>.
+        </p>
+
+        <h2>3. Browser storage</h2>
+        <p>
+            The selected language is stored in the browser's local storage under the key
+            <code>portfolio_language</code>. Its sole purpose is to restore the language
+            expressly selected by the visitor on a later visit. The information remains on
+            the device and is not transmitted to me. Access to this browser storage is based
+            on section 25(2)(2) TDDDG.
+        </p>
+        <p>
+            To ensure correct routing within the client-side application, the requested route
+            may briefly be stored in the browser's session storage. This entry is deleted
+            after the redirect and no later than the end of the browser session. This storage
+            is necessary to provide the page expressly requested by the visitor.
+        </p>
+
+        <h2>4. External Fun Fact API</h2>
+        <p>
+            The browser connects to the “Random Useless Facts API” at
+            <code>uselessfacts.jsph.pl</code> only when the <code>funfact</code> command is
+            expressly executed in the interactive terminal. At a minimum, the visitor's IP
+            address, the time and destination of the request, browser information, and the
+            selected language code are transmitted to the API provider. No connection to this
+            service is made unless the command is used.
+        </p>
+        <p>
+            Processing is based on Article 6(1)(f) GDPR. My legitimate interest is to provide
+            the interactive function expressly requested by the visitor. This requires only
+            the individual technical request. Visitors who do not want this transmission can
+            refrain from using the <code>funfact</code> command.
+        </p>
+        <p>
+            Information about the service:
+            <a href="https://uselessfacts.jsph.pl/" target="_blank" rel="noopener noreferrer">
+                uselessfacts.jsph.pl
+            </a>.
+        </p>
+
+        <h2>5. Contact by email</h2>
+        <p>
+            If you contact me by email, I process the information you provide in order to
+            respond to your request. If the request concerns steps prior to entering into a
+            contract or an employment relationship, processing is based on Article 6(1)(b)
+            GDPR or section 26 BDSG. In other cases, processing is based on Article 6(1)(f)
+            GDPR. The legitimate interest is responding to the request. The data is deleted
+            once it is no longer required for handling the request, unless statutory retention
+            obligations require otherwise.
+        </p>
+
+        <h2>6. External links</h2>
+        <p>
+            This website contains links to external services such as GitHub and LinkedIn.
+            A connection to these providers is established only when the relevant link is
+            selected. From that point onward, the privacy terms of the respective provider apply.
+        </p>
+
+        <h2>7. Cookies and audience measurement</h2>
+        <p>
+            This website itself does not set cookies and does not use analytics, advertising,
+            or tracking services. I do not conduct audience measurement or create visitor profiles.
+        </p>
+
+        <h2>8. Data subject rights</h2>
+        <p>
+            Subject to the applicable legal requirements, data subjects have rights including
+            access, rectification, erasure, restriction of processing, data portability, and
+            objection. Consent may be withdrawn at any time with effect for the future. Data
+            subjects also have the right to lodge a complaint with a data protection authority.
+        </p>
+
+    }
+</article>
+
+@code {
+    protected override void OnInitialized()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

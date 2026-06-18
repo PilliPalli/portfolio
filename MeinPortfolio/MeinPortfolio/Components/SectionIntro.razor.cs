@@ -19,7 +19,7 @@ public partial class SectionIntro : ComponentBase
 
     private static readonly List<string> Sections = new()
     {
-        "about", "projects", "contact", "home", "~"
+        "about", "experience", "projects", "contact", "home", "~"
     };
 
     protected override Task OnInitializedAsync()
@@ -37,9 +37,9 @@ public partial class SectionIntro : ComponentBase
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("initTerminal");
+            await JsRuntime.InvokeVoidAsync("initTerminal");
             await FocusInputAsync();
-            await JSRuntime.InvokeVoidAsync("bindTerminalInput");
+            await JsRuntime.InvokeVoidAsync("bindTerminalInput");
         }
     }
 
@@ -57,7 +57,7 @@ public partial class SectionIntro : ComponentBase
         CommandService.RegisterCommand(new DateCommand());
         CommandService.RegisterCommand(new WhoamiCommand());
 
-        CommandService.RegisterCommand(new CvCommand(JSRuntime, LanguageService));
+        CommandService.RegisterCommand(new CvCommand(JsRuntime, LanguageService));
 
         CommandService.RegisterCommand(new FunFactCommand(LanguageService));
     }
@@ -256,14 +256,14 @@ public partial class SectionIntro : ComponentBase
         await FocusInputAsync();
         StateHasChanged();
 
-        var isReady = await JSRuntime.InvokeAsync<bool>("eval", "window.terminalReady === true");
+        var isReady = await JsRuntime.InvokeAsync<bool>("eval", "window.terminalReady === true");
         if (isReady)
-            await JSRuntime.InvokeVoidAsync("scrollTerminalToBottom");
+            await JsRuntime.InvokeVoidAsync("scrollTerminalToBottom");
     }
 
     private async Task FocusInputAsync()
     {
-        await JSRuntime.InvokeVoidAsync("eval", "document.querySelector('.terminal-input input').focus()");
+        await JsRuntime.InvokeVoidAsync("eval", "document.querySelector('.terminal-input input').focus()");
     }
 
     private void HandleNavigate(NavigationSection section)

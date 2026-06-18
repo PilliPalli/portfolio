@@ -35,6 +35,10 @@ namespace MeinPortfolio.Models.Commands
                     _navigationService.NavigateTo(NavigationSection.Projects);
                     return Task.FromResult($"Navigated to projects section.");
                 
+                case "experience":
+                    _navigationService.NavigateTo(NavigationSection.Experience);
+                    return Task.FromResult($"Navigated to experience section.");
+                
                 case "contact":
                     _navigationService.NavigateTo(NavigationSection.Contact);
                     return Task.FromResult($"Navigated to contact section.");
@@ -45,7 +49,7 @@ namespace MeinPortfolio.Models.Commands
                     return Task.FromResult($"Navigated to home section.");
                 
                 default:
-                    return Task.FromResult($"Section '{section}' not found. Available sections: about, projects, contact, home");
+                    return Task.FromResult($"Section '{section}' not found. Available sections: about, experience, projects, contact, home");
             }
         }
     }
@@ -88,9 +92,10 @@ namespace MeinPortfolio.Models.Commands
             
             return section switch
             {
-                NavigationSection.Home => Task.FromResult("about   projects   contact"),
+                NavigationSection.Home => Task.FromResult("about    experience  projects   contact"),
                 NavigationSection.About => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 NavigationSection.Projects => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
+                NavigationSection.Experience => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 NavigationSection.Contact => Task.FromResult(string.Join("   ", VirtualFileSystem.GetFiles(section).Keys)),
                 _ => Task.FromResult("Unknown section")
             };

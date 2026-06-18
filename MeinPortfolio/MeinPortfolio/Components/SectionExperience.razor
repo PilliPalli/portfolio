@@ -1,0 +1,87 @@
+@using MeinPortfolio.Services
+@inject LanguageService LanguageService
+@implements  IDisposable
+
+<section id="experience" class="section">
+    <div class="container">
+        <h2 class="section-title">@LanguageService.GetText("Berufserfahrung", "Professional Experience")</h2>
+        <div class="experience-timeline">
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-role">
+                        <div class="experience-title">Software Developer</div>
+                        <span class="experience-company">Smart InsurTech AG</span>
+                    </div>
+                    <span class="experience-period">
+                        @LanguageService.GetText("Jan 2026 - heute", "Jan 2026 - today")
+                    </span>
+                </div>
+                <p class="experience-description">
+                    @LanguageService.GetText(
+                        "Entwicklung und Wartung von Microservices im Versicherungsumfeld. Schwerpunkte auf Event-Driven Architecture mit Apache Kafka, REST-APIs mit Spring Boot sowie Integration in bestehende Systemlandschaften.",
+                        "Development and maintenance of microservices in the insurance domain. Focus on event-driven architecture with Apache Kafka, REST APIs with Spring Boot, and integration into existing system landscapes."
+                    )
+                </p>
+                <div class="experience-highlights">
+                    <h4>@LanguageService.GetText("Schwerpunkte", "Key Responsibilities")</h4>
+                    <ul>
+                        <li>@LanguageService.GetText("Entwicklung von Microservices mit Java und Spring Boot","Development of microservices of Java and Spring Boot")</li>
+                        <li>@LanguageService.GetText("Implementierung von Event-Driven Architecture mit Apache Kafka", "Implementation of event-driven architecture with Apache-Kafka")</li>
+                        <li> @LanguageService.GetText("Entwurf und Umsetzung von REST-APIs", "Design and implementation of REST APIs")</li>
+                        <li> @LanguageService.GetText("Arbeit mit PostgreSQL-Datenbanken und Docker-Containern", "Working with PostgreSQL databases and Docker containers")</li>
+                        <li> @LanguageService.GetText("Agile Zusammenarbeit im Team mit Jira und Confluence (Scrum)", "Agile team collaboration using Jira and Confluence (Scrum)")</li>
+                    </ul>
+                </div>
+                <div class="experience-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">Apache Kafka</span>
+                    <span class="tech-tag">REST APIs</span>
+                    <span class="tech-tag">PostgeSQL</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Git</span>
+                </div>
+            </div>
+            
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-role">
+                        <h3 class="experience-title">@LanguageService.GetText("Ausbildung", "Education")</h3>
+                        <span class="experience-company">@LanguageService.GetText("Staatlich geprüfter Wirtschaftsinformatiker", "State certified Business Informatics Specialist")</span>
+                    </div>
+                    <span class="experience-period">
+                        @LanguageService.GetText("Abschluss 2025", "Graduated 2025")
+                    </span>
+                </div>
+                <p class="experience-description">
+                    @LanguageService.GetText("Schwerpunkt Anwendungsentwicklung mit Fokus auf C#/.NET, Datenbanken und Software-Engineering. Abschlussprojekte in Desktop- und Webanwendungen.",
+                        "Specialization in application development with focus on C#/.NET, databases and software engineering. Final projects in desktop and web applications")
+                </p>
+                <div class="experience-tech">
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">.NET</span>
+                    <span class="tech-tag">WPF</span>
+                    <span class="tech-tag">SQL</span>
+                    <span class="tech-tag">Software Engineering</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

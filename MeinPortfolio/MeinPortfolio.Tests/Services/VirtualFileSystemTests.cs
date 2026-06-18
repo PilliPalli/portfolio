@@ -42,6 +42,15 @@ public class VirtualFileSystemTests
     }
 
     [Fact]
+    public void GetFileNames_ExperienceSection_ContainsExperienceFiles()
+    {
+        var files = VirtualFileSystem.GetFileNames(NavigationSection.Experience).ToList();
+
+        Assert.Contains("smart-insurtech.txt", files);
+        Assert.Contains("tech-stack.txt", files);
+    }
+
+    [Fact]
     public void GetFileNames_ContactSection_ContainsEmailFile()
     {
         var files = VirtualFileSystem.GetFileNames(NavigationSection.Contact).ToList();

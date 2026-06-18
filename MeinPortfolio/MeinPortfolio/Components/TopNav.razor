@@ -12,15 +12,16 @@
         <!-- Hamburger nur auf Mobile sichtbar (per CSS) -->
         <button class="nav-toggle"
                 @onclick="ToggleMenu"
-                aria-expanded="@isMenuOpen"
+                aria-expanded="@_isMenuOpen"
                 aria-controls="primary-nav"
                 aria-label="Menü öffnen/schließen">
             <img src="images/hamburger.svg" alt="hamburger-icon"/>
         </button>
 
-        <div id="primary-nav" class="nav-links @(isMenuOpen ? "open" : null)">
+        <div id="primary-nav" class="nav-links @(_isMenuOpen ? "open" : null)">
             <a href="#home" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Home", "Home")</a>
             <a href="#about" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Über mich", "About")</a>
+            <a href="#experience" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Erfahrung","Experience")</a>
             <a href="#projects" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Projekte", "Projects")</a>
             <a href="#contact" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Kontakt", "Contact")</a>
             <a href="@LanguageService.GetCvPath()" class="nav-link nav-cv" target="_blank" @onclick="CloseMenu">CV</a>
@@ -34,10 +35,10 @@
 
 @code {
 
-    private bool isMenuOpen;
+    private bool _isMenuOpen;
 
-    private void ToggleMenu() => isMenuOpen = !isMenuOpen;
-    private void CloseMenu() => isMenuOpen = false;
+    private void ToggleMenu() => _isMenuOpen = !_isMenuOpen;
+    private void CloseMenu() => _isMenuOpen = false;
     
     protected override async Task OnInitializedAsync()
     {

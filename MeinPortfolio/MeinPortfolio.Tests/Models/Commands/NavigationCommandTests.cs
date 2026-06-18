@@ -26,6 +26,7 @@ public class CdCommandTests
 
     [Theory]
     [InlineData("about", NavigationSection.About)]
+    [InlineData("experience", NavigationSection.Experience)]
     [InlineData("projects", NavigationSection.Projects)]
     [InlineData("contact", NavigationSection.Contact)]
     public async Task Execute_ValidSection_NavigatesToSection(string input, NavigationSection expected)
@@ -128,7 +129,19 @@ public class LsCommandTests
 
         Assert.Contains("about", result);
         Assert.Contains("projects", result);
+        Assert.Contains("experience", result);
         Assert.Contains("contact", result);
+    }
+    
+    [Fact]
+    public async Task Execute_InExperience_ListsFiles()
+    {
+        _navService.NavigateTo(NavigationSection.Experience);
+
+        var result = await _sut.ExecuteAsync([]);
+
+        Assert.Contains("smart-insurtech.txt", result);
+        Assert.Contains("tech-stack.txt", result);
     }
 
     [Fact]

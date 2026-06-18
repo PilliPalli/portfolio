@@ -8,9 +8,9 @@
         <div class="about-content">
             <div class="about-text">
                 <p class="about-intro">
-                    @LanguageService.GetText("Hallo! Ich bin Moritz, ein " + @Age +"-jähriger staatlich geprüfter Wirtschaftsinformatiker und Berufseinsteiger mit einer Leidenschaft für moderne Softwareentwicklung.",
-                        "Hello! I'm Moritz, a " + @Age +"-year-old certified business informatics specialist and career starter with a passion for modern software development."
-                    )
+                @LanguageService.GetText(
+                    "Hallo! Ich bin Moritz, ein " + @Age + "-jähriger staatlich geprüfter Wirtschaftsinformatiker mit Erfahrung in der professionellen Softwareentwicklung. Ich arbeite sowohl im C#/.NET- als auch im Java/Spring-Boot-Ökosystem und bringe Leidenschaft für sauberen Code und moderne Architekturen mit.",
+                    "Hello! I'm Moritz, a " + @Age + "-year-old certified business informatics specialist with professional software development experience. I work across both the C#/.NET and Java/Spring Boot ecosystems and bring a passion for clean code and modern architectures.")
                 </p>
                 <div class="about-details">
                     <div class="about-item">
@@ -19,7 +19,11 @@
                     </div>
                     <div class="about-item">
                         <h3>@LanguageService.GetText("Fokus", "Focus")</h3>
-                        <p>@LanguageService.GetText("C#/.NET-Entwicklung", "C#/.NET development")</p>
+                        <p>@LanguageService.GetText("Backend-Entwicklung mit C#/.NET & Java/Spring Boot", "Backend development with C#/.NET & Java/Spring Boot")</p>                    
+                    </div>
+                    <div class="about-item">
+                        <h3>@LanguageService.GetText("Erfahrung", "Experience")</h3>
+                        <p>@LanguageService.GetText("Software Developer bei Smart InsurTech AG (Jan 2026 - heute)", "Software Developer at Smart InsurTech AG (Jan 2026 - today)")</p>
                     </div>
                     <div class="about-item">
                         <h3>@LanguageService.GetText("Motivation", "Motivation")</h3>
@@ -29,8 +33,8 @@
                         <h3>@LanguageService.GetText("Interessen", "Interests")</h3>
                         <p>
                             @LanguageService.GetText(
-                                "Norwegisch lernen & skandinavische Kultur, Backpacking & Wandern, C#/.NET – persönliche Lern- und Nebenprojekte sowie American Football.",
-                                "Learning Norwegian & Scandinavian culture, backpacking & hiking, C#/.NET – personal learning & side projects, and American football."
+                                "Norwegisch lernen & skandinavische Kultur, Backpacking & Wandern, persönliche Nebenprojekte sowie American Football.",
+                                "Learning Norwegian & Scandinavian culture, backpacking & hiking, personal side projects, and American football."
                             )
                         </p>
                     </div>

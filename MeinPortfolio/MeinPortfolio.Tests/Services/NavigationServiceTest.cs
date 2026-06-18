@@ -107,6 +107,7 @@ public class NavigationServiceTest
     [Theory]
     [InlineData(NavigationSection.Home, "~")]
     [InlineData(NavigationSection.About, "~/about")]
+    [InlineData(NavigationSection.Experience, "~/experience")]
     [InlineData(NavigationSection.Projects, "~/projects")]
     [InlineData(NavigationSection.Contact, "~/contact")]
     public void GetSectionPath_ReturnsCorrectPathForSection(NavigationSection section, string expectedPath)
