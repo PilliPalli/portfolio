@@ -1,0 +1,31 @@
+@page "/not-found"
+@layout MainLayout
+@inject LanguageService LanguageService
+@implements IDisposable
+
+<PageTitle>404</PageTitle>
+
+<div class="notfound-page">
+    <div class="notfound-wrapper">
+        <h1>404</h1>
+        <p>@LanguageService.GetText("Sorry, diese Seite existiert nicht", "Sorry, there's nothing at this address")</p>
+        <a href="/">@LanguageService.GetText("Startseite", "Home")</a>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

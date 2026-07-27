@@ -11,7 +11,7 @@ async function downloadCv(url, fileName) {
 
         const a = document.createElement("a");
         a.href = objectUrl;
-        a.download = fileName || "CV.pdf";
+        a.download = fileName || url.substring(url.lastIndexOf("/") + 1);
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

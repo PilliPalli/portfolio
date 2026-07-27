@@ -40,11 +40,9 @@
     private void ToggleMenu() => _isMenuOpen = !_isMenuOpen;
     private void CloseMenu() => _isMenuOpen = false;
     
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await LanguageService.InitializeAsync();
         LanguageService.OnLanguageChanged += OnLanguageChanged;
-        
     }
 
     protected async Task ToggleLanguage()

@@ -27,6 +27,7 @@ public class VirtualFileSystemTests
         var files = VirtualFileSystem.GetFileNames(NavigationSection.About).ToList();
 
         Assert.Contains("bio.txt", files);
+        Assert.Contains("skills.txt", files);
     }
 
     [Fact]
@@ -48,6 +49,7 @@ public class VirtualFileSystemTests
 
         Assert.Contains("smart-insurtech.txt", files);
         Assert.Contains("tech-stack.txt", files);
+        Assert.Contains("education.txt", files);
     }
 
     [Fact]
@@ -56,6 +58,7 @@ public class VirtualFileSystemTests
         var files = VirtualFileSystem.GetFileNames(NavigationSection.Contact).ToList();
 
         Assert.Contains("email.txt", files);
+        Assert.Contains("profiles.txt", files);
     }
 
     [Fact]

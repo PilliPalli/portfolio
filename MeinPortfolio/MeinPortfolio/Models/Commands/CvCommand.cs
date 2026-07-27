@@ -21,10 +21,8 @@ namespace MeinPortfolio.Models.Commands
 
         public override async Task<string> ExecuteAsync(string[] args)
         {
-            var isGerman = _languageService.CurrentLanguage == LanguageType.German;
-
-            var url  = isGerman ? "cv/CV_DE.pdf" : "cv/CV_EN.pdf";
-            var name = isGerman ? "Moritz_Kreis_CV_DE.pdf" : "Moritz_Kreis_CV_EN.pdf";
+            var url = _languageService.GetCvPath();
+            var name = Path.GetFileName(url);
 
             await _jsRuntime.InvokeVoidAsync("downloadCv", url, name);
             return _languageService.GetText("Downloading CV…", "Downloading CV…");

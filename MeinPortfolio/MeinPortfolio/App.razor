@@ -1,21 +1,27 @@
 ﻿@inject LanguageService LanguageService
+@implements IDisposable
 
-<Router AppAssembly="@typeof(App).Assembly">
+<Router AppAssembly="@typeof(App).Assembly" NotFoundPage="@typeof(MeinPortfolio.Pages.NotFound)">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
-    <NotFound>
-        <PageTitle>404</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <div class="notfound-page">
-                <div class="notfound-wrapper">
-                    <h1>404</h1>
-                    <p>@LanguageService.GetText("Sorry, diese Seite existiert nicht", "Sorry, there's nothing at this address")</p>
-                    <a href="/">@LanguageService.GetText("Startseite", "Home")</a>
-                </div>
-            </div>
-        </LayoutView>
-    </NotFound>
-
 </Router>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+        await LanguageService.InitializeAsync();
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

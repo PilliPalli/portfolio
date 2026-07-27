@@ -9,8 +9,8 @@
             <div class="about-text">
                 <p class="about-intro">
                 @LanguageService.GetText(
-                    "Hallo! Ich bin Moritz, ein " + @Age + "-jähriger staatlich geprüfter Wirtschaftsinformatiker mit Erfahrung in der professionellen Softwareentwicklung. Ich arbeite sowohl im C#/.NET- als auch im Java/Spring-Boot-Ökosystem und bringe Leidenschaft für sauberen Code und moderne Architekturen mit.",
-                    "Hello! I'm Moritz, a " + @Age + "-year-old certified business informatics specialist with professional software development experience. I work across both the C#/.NET and Java/Spring Boot ecosystems and bring a passion for clean code and modern architectures.")
+                    "Hallo! Ich bin Moritz, ein " + @PortfolioProfile.Age + "-jähriger staatlich geprüfter Wirtschaftsinformatiker mit Erfahrung in der professionellen Softwareentwicklung. Ich arbeite sowohl im C#/.NET- als auch im Java/Spring-Boot-Ökosystem und bringe Leidenschaft für sauberen Code und moderne Architekturen mit.",
+                    "Hello! I'm Moritz, a " + @PortfolioProfile.Age + "-year-old State-certified Business Informatics Specialist with professional software development experience. I work across both the C#/.NET and Java/Spring Boot ecosystems and bring a passion for clean code and modern architectures.")
                 </p>
                 <div class="about-details">
                     <div class="about-item">
@@ -43,7 +43,7 @@
             </div>
             <div class="about-stats">
                 <div class="stat-item">
-                        <span class="stat-number">@Age</span>
+                        <span class="stat-number">@PortfolioProfile.Age</span>
                         <span class="stat-label">@LanguageService.GetText("Jahre alt", "Years old")</span>
                 </div>
                 <div class="stat-item">
@@ -63,16 +63,6 @@
 
 @code {
     
-    private static readonly DateTime BirthDate = new DateTime(2002, 9, 3); 
-
-    private int Age {
-        get {
-            var today = DateTime.Today;
-            var age = today.Year - BirthDate.Year;
-            if (BirthDate.Date > today.AddYears(-age)) age--;
-            return age;
-        }
-    }
     protected override async Task OnInitializedAsync()
     {
         LanguageService.OnLanguageChanged += OnLanguageChanged;

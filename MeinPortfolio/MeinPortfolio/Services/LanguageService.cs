@@ -91,14 +91,13 @@ namespace MeinPortfolio.Services
         {
             if (_currentLanguage == LanguageType.German)
             {
-                return "cv/CV_DE.pdf";
+                return "cv/cv_de.pdf";
             }
             else
             {
-                return "cv/CV_EN.pdf";
+                return "cv/cv_en.pdf";
             }
         }
     }
     
 }
-
