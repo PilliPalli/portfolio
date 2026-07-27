@@ -58,7 +58,7 @@ public class LanguageServiceTests
     {
         var result = _sut.GetCvPath();
 
-        Assert.Equal("cv/CV_DE.pdf", result);
+        Assert.Equal("cv/cv_de.pdf", result);
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class LanguageServiceTests
 
         var result = _sut.GetCvPath();
 
-        Assert.Equal("cv/CV_EN.pdf", result);
+        Assert.Equal("cv/cv_en.pdf", result);
     }
 
     // --- SetLanguageServiceAsync ---
