@@ -1,0 +1,62 @@
+@using Portfolio.Services
+@inject LanguageService LanguageService
+@implements IDisposable
+
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">@LanguageService.GetText("Kontakt", "Get In Touch")</h2>
+        <div class="contact-content">
+            <div class="contact-text">
+                <p class="contact-intro">
+                    @LanguageService.GetText(
+                        "Interessiert an einer Zusammenarbeit oder haben Sie Fragen zu meinen Projekten? Ich freue mich auf Ihre Nachricht!",
+                        "Interested in collaboration or have questions about my projects? I look forward to hearing from you!"
+                    )
+                </p>
+            </div>
+            <div class="contact-buttons">
+                <a href="mailto:mail@moritz-kreis.de" class="contact-btn">
+                    <span class="contact-icon">
+                        <img src="images/mail.png" alt="MailIcon"/>
+                    </span>
+                    <span>E-Mail</span>
+                </a>
+                <a href="https://www.linkedin.com/in/moritz-nicola-kreis" class="contact-btn" target="_blank">
+                    <span class="contact-icon">
+                        <img src="images/linkedin.png" alt="LinkedInIcon"/>
+                    </span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/PilliPalli" class="contact-btn" target="_blank">
+                    <span class="contact-icon">
+                        <img src="images/github.png" alt="GitHubIcon"/>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+                <a href="@LanguageService.GetCvPath()" class="contact-btn" target="_blank">
+                    <span class="contact-icon">
+                        <img src="images/pdf.png" alt="CVIcon"/>
+                    </span>
+                    <span>@LanguageService.GetText("CV herunterladen", "CV Download")</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

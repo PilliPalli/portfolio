@@ -1,0 +1,27 @@
+﻿@inject LanguageService LanguageService
+@implements IDisposable
+
+<Router AppAssembly="@typeof(App).Assembly" NotFoundPage="@typeof(Portfolio.Pages.NotFound)">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+        await LanguageService.InitializeAsync();
+    }
+
+    private void OnLanguageChanged(LanguageType language)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        LanguageService.OnLanguageChanged -= OnLanguageChanged;
+    }
+}

@@ -1,4 +1,4 @@
-# MeinPortfolio
+# Portfolio
 Interaktives Terminal-Portfolio von **Moritz Kreis** — gebaut mit Blazor WebAssembly (.NET 8).
 Besucher können das Portfolio klassisch durchscrollen oder über ein integriertes Terminal mit Unix-ähnlichen Befehlen navigieren.
 ## Live
@@ -14,7 +14,7 @@ Gehostet auf GitHub Pages via automatischem Deployment (`main` → `gh-pages`).
 | CI/CD | GitHub Actions |
 ## Projektstruktur
 ```
-MeinPortfolio/
+Portfolio/
 ├── Components/
 │   ├── SectionIntro.razor(.cs)   # Hero-Bereich mit Terminal
 │   ├── SectionAbout.razor        # Über mich
@@ -57,13 +57,13 @@ MeinPortfolio/
 ## Lokal starten
 **Voraussetzungen:** .NET 8 SDK
 ```bash
-cd MeinPortfolio/MeinPortfolio
+cd Portfolio/Portfolio
 dotnet run
 ```
 Die App startet unter `http://localhost:5143`.
 ## Build
 ```bash
-cd MeinPortfolio/MeinPortfolio
+cd Portfolio/Portfolio
 dotnet build
 ```
 ## Deployment
