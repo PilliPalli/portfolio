@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Repository auschecken
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: .NET installieren
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'  # Passende Version wählen
+          dotnet-version: '10.0.x'
 
       - name: Blazor WebAssembly veröffentlichen
         run: dotnet publish Portfolio/Portfolio/Portfolio.csproj -c Release --output dist
@@ -27,4 +27,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/wwwroot  # Nur wwwroot wird veröffentlicht
+          folder: dist/wwwroot
