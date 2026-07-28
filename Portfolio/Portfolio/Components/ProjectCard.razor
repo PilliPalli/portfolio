@@ -4,11 +4,11 @@
         <div class="project-links">
             @if (!string.IsNullOrEmpty(Project.CodeUrl))
             {
-                <a href="@Project.CodeUrl" class="project-link" target="_blank">Code</a>
+                <a href="@Project.CodeUrl" class="project-link" target="_blank" rel="noopener noreferrer">Code</a>
             }
             @if (!string.IsNullOrEmpty(Project.LiveUrl))
             {
-                <a href="@Project.LiveUrl" class="project-link" target="_blank">Live</a>
+                <a href="@Project.LiveUrl" class="project-link" target="_blank" rel="noopener noreferrer">Live</a>
             }
         </div>
     </div>
