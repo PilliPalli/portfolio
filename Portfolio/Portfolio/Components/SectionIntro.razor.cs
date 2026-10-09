@@ -38,7 +38,6 @@ public partial class SectionIntro : ComponentBase
         if (firstRender)
         {
             await JsRuntime.InvokeVoidAsync("initTerminal");
-            await FocusInputAsync();
             await JsRuntime.InvokeVoidAsync("bindTerminalInput");
         }
     }
