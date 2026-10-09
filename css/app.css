@@ -375,7 +375,7 @@ body {
 }
 
 /* ============ Mobile Nav (collapsible) – keep at file end ============ */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .nav-toggle {
         display: inline-block;
         font-size: 2rem;
