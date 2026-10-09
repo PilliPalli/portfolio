@@ -30,27 +30,6 @@ window.initTerminal = function () {
     console.log('Terminal initialized');
 };
 
-window.bindTerminalInput = function () {
-    const input = document.querySelector('.terminal-input input');
-    if (!input) return;
-
-    if (input._terminalBound) return;
-    input._terminalBound = true;
-
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') {
-            e.preventDefault();
-        }
-    });
-
-    input.addEventListener('keyup', (e) => {
-        if (e.key === 'Tab') {
-            setTimeout(() => input.focus(), 0);
-        }
-    });
-};
-
-
 // Text animation
 window.animateText = function(text, elementId, speed = 50) {
     return new Promise(resolve => {
