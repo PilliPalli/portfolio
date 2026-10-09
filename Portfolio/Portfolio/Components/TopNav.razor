@@ -3,10 +3,11 @@
 @implements IDisposable
 
 
-<nav class="top-nav">
+<nav class="top-nav" aria-label="@LanguageService.GetText("Hauptnavigation", "Main navigation")">
     <div class="nav-container">
         <div class="nav-brand">
-            <a href="#home" class="nav-logo">MK</a>
+            <a href="#home" class="nav-logo" @onclick="CloseMenu"
+               aria-label="@LanguageService.GetText("Zur Startseite", "Back to home")">MK</a>
         </div>
 
         <!-- Hamburger nur auf Mobile sichtbar (per CSS) -->
@@ -14,17 +15,17 @@
                 @onclick="ToggleMenu"
                 aria-expanded="@_isMenuOpen"
                 aria-controls="primary-nav"
-                aria-label="Menü öffnen/schließen">
+                aria-label="@LanguageService.GetText("Menü öffnen/schließen", "Toggle menu")">
             <img src="images/hamburger.svg" alt="hamburger-icon"/>
         </button>
 
         <div id="primary-nav" class="nav-links @(_isMenuOpen ? "open" : null)">
-            <a href="#home" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Home", "Home")</a>
-            <a href="#about" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Über mich", "About")</a>
-            <a href="#experience" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Erfahrung","Experience")</a>
+            <a href="#about" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Über mich", "About me")</a>
             <a href="#projects" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Projekte", "Projects")</a>
+            <a href="#experience" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Werdegang", "Background")</a>
+            <a href="#skills" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Fähigkeiten", "Skills")</a>
             <a href="#contact" class="nav-link" @onclick="CloseMenu">@LanguageService.GetText("Kontakt", "Contact")</a>
-            <a href="@LanguageService.GetCvPath()" class="nav-link nav-cv" target="_blank" @onclick="CloseMenu">CV</a>
+            <a href="@LanguageService.GetCvPath()" class="nav-link nav-cv" target="_blank" @onclick="CloseMenu">@LanguageService.GetText("Lebenslauf", "CV")</a>
             <button class="nav-language-btn" @onclick="ToggleLanguage">
                 @(LanguageService.CurrentLanguage == LanguageType.German ? "EN" : "DE")
             </button>
