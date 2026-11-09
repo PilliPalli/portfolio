@@ -50,6 +50,7 @@ window.bindTerminalInput = function () {
     });
 };
 
+window.setDocumentLanguage = language => { document.documentElement.lang = language; };
 
 // Text animation
 window.animateText = function(text, elementId, speed = 50) {
@@ -74,6 +75,7 @@ window.animateText = function(text, elementId, speed = 50) {
         }, speed);
     });
 };
+
 window.scrollTerminalToBottom = function () {
     const el = document.getElementById('terminal-body');
     if (el) {

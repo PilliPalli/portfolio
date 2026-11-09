@@ -20,6 +20,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Portfolio-Tests ausführen
+        run: dotnet test Portfolio/Portfolio.Tests/Portfolio.Tests.csproj -c Release
+
       - name: Blazor WebAssembly veröffentlichen
         run: dotnet publish Portfolio/Portfolio/Portfolio.csproj -c Release --output dist
 

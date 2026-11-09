@@ -69,7 +69,7 @@ namespace Portfolio.Services
 
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-            return Task.CompletedTask;
+            return _jsRuntime.InvokeVoidAsync("setDocumentLanguage", culture).AsTask();
         }
 
         public string GetText(string germanText, string englishText)
